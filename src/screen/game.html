@@ -15,7 +15,7 @@
 
     <body id="t" class="offline">
         <div id="messageBox" class="sendmessage">
-            <h1 style="text-align: center; font-family: 'Open Sans', sans-serif">Press Space to start</h1>
+            <h1 style="text-align: center; font-family: 'Open Sans', sans-serif">Jump on your phone to start!</h1>
             <div class="niokbutton" onclick="okbuttonsend()"></div>
         </div>
         <div id="main-frame-error" class="interstitial-wrapper">
@@ -59,8 +59,23 @@
             console.log("Game", game);
         });
 
+        function returnHome() {
+            location.href = "/screen/index.html";
+        }
+
+        const NO_ACTIVITY_TIME = 1000 * 60;
+        let noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
+
         window.addEventListener("pubnub", (ev) => {
             console.log("Received pubnub event", ev);
+
+            clearInterval(noActivityTimer);
+            noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
+
+            if (game.crashed) {
+                game.restart();
+                return;
+            }
 
             let message = ev.detail.message;
             if (message.type === "jump") {
