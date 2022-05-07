@@ -56,6 +56,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             console.log("Starting new game");
             game = new Runner(".interstitial-wrapper");
+            console.log("Game", game);
         });
 
         window.addEventListener("pubnub", (ev) => {
@@ -71,12 +72,19 @@
                         detail: 0,
                     })
                 );
-            } else if (message.type === "duck") {
+            } else if (message.type === "duckDown") {
                 // Simulate duck button event
                 document.dispatchEvent(
                     new KeyboardEvent("keydown", {
                         keyCode: 40,
-                        key: " ",
+                        detail: 0,
+                    })
+                );
+            } else if (message.type === "duckUp") {
+                // Simulate duck button event
+                document.dispatchEvent(
+                    new KeyboardEvent("keyup", {
+                        keyCode: 40,
                         detail: 0,
                     })
                 );
