@@ -8,10 +8,22 @@
         <title>chrome easter egg: t-rex runner</title>
         <link rel="stylesheet" href="index.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-        <script src="index.js"></script>
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="index.js"></script>
+        <script src="connection.js"></script>
     </head>
     <body>
-        <h1>this is the controller screen</h1>
+        <h1>Scan the QR code to see interaction</h1>
     </body>
+
+    <script>
+        window.addEventListener("pubnub", (ev) => {
+            console.log("Received pubnub event", ev);
+
+            let message = ev.detail.message;
+            if (message.type === "connected") {
+                location.href = "/screen/game.html";
+            }
+        });
+    </script>
 </html>
