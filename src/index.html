@@ -11,20 +11,87 @@
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
         <script src="index.js"></script>
         <script src="connection.js"></script>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                user-select: none;
+            }
+
+            body,
+            html {
+                height: 100%;
+            }
+
+            .button-container {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .button {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .button-icon {
+                max-width: 50vw;
+                max-height: 50vh;
+            }
+        </style>
     </head>
     <body>
-        <h1>Controller screen</h1>
-    </body>
+        <div class="button-container">
+            <div onclick="jump()" class="button" style="background: red">
+                <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M416 352c-8.188 0-16.38-3.125-22.62-9.375L224 173.3l-169.4 169.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25C432.4 348.9 424.2 352 416 352z"
+                    />
+                </svg>
+            </div>
+            <div onclick="duck()" class="button" style="background: blue">
+                <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"
+                    />
+                </svg>
+            </div>
+        </div>
 
-    <script>
-        setTimeout(() => {
-            console.log("Sending message");
+        <script>
+            function jump() {
+                pubnub.publish({
+                    channel: "game",
+                    message: {
+                        type: "jump",
+                    },
+                });
+            }
+
+            function duck() {
+                pubnub.publish({
+                    channel: "game",
+                    message: {
+                        type: "duck",
+                    },
+                });
+            }
+
+            // Let the screen know that a controller is connected
             pubnub.publish({
                 channel: "game",
                 message: {
                     type: "connected",
                 },
             });
-        }, 2000);
-    </script>
+        </script>
+    </body>
 </html>

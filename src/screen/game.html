@@ -8,8 +8,9 @@
         <title>chrome easter egg: t-rex runner</title>
         <link rel="stylesheet" href="/game.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-        <script src="/game.js"></script>
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="/game.js"></script>
+        <script src="/connection.js"></script>
     </head>
 
     <body id="t" class="offline">
@@ -50,5 +51,36 @@
                 box.style.visibility = "hidden";
             }
         };
+
+        let game;
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("Starting new game");
+            game = new Runner(".interstitial-wrapper");
+        });
+
+        window.addEventListener("pubnub", (ev) => {
+            console.log("Received pubnub event", ev);
+
+            let message = ev.detail.message;
+            if (message.type === "jump") {
+                // Simulate jump button event
+                document.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        keyCode: 32,
+                        key: " ",
+                        detail: 0,
+                    })
+                );
+            } else if (message.type === "duck") {
+                // Simulate duck button event
+                document.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        keyCode: 40,
+                        key: " ",
+                        detail: 0,
+                    })
+                );
+            }
+        });
     </script>
 </html>
