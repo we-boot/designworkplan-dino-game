@@ -23,6 +23,7 @@
             body,
             html {
                 height: 100%;
+                overflow: hidden;
             }
 
             .button-container {
@@ -40,7 +41,7 @@
 
             .button-icon {
                 max-width: 50vw;
-                max-height: 50vh;
+                max-height: 40vh;
                 color: white;
             }
         </style>
@@ -48,7 +49,7 @@
     <body>
         <div class="button-container">
             <div id="jump" onkeydown="jump()" class="button" style="background: red">
-                <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path
                         fill="white"
@@ -57,7 +58,7 @@
                 </svg>
             </div>
             <div id="duck" class="button" style="background: blue">
-                <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path
                         fill="white"
