@@ -1,4 +1,4 @@
-const WEBSITE_ROOT = "https://www.designworkplan.com/pongnub";
+const WEBSITE_ROOT = "https://we-boot.github.io/designworkplan-dino-game";
 const NO_ACTIVITY_TIME = 1000 * 60;
 
 let pubnub = new PubNub({
