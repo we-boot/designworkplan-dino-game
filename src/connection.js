@@ -1,4 +1,4 @@
-const WEBSITE_ROOT = "http://localhost:3000";
+const WEBSITE_ROOT = "https://www.designworkplan.com/pongnub";
 const NO_ACTIVITY_TIME = 1000 * 60;
 
 let pubnub = new PubNub({
