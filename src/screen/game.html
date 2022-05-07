@@ -23,8 +23,8 @@
                 <div class="icon icon-offline" alt=""></div>
             </div>
             <div id="offline-resources">
-                <img id="offline-resources-1x" src="/assets/default_100_percent/100-offline-sprite.png" />
-                <img id="offline-resources-2x" src="/assets/default_200_percent/200-offline-sprite.png" />
+                <img id="offline-resources-1x" src="../assets/default_100_percent/100-offline-sprite.png" />
+                <img id="offline-resources-2x" src="../assets/default_200_percent/200-offline-sprite.png" />
                 <template id="audio-resources">
                     <audio
                         id="offline-sound-press"
@@ -60,10 +60,9 @@
         });
 
         function returnHome() {
-            location.href = "/screen/index.html";
+            location.href = WEBSITE_ROOT + "/screen/index.html";
         }
 
-        const NO_ACTIVITY_TIME = 1000 * 60;
         let noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
 
         window.addEventListener("pubnub", (ev) => {
