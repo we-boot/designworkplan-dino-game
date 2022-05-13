@@ -6,54 +6,22 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <title>designworkplan dino game</title>
+        <link rel="stylesheet" href="../index.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
         <script src="../connection.js"></script>
         <script src="../qrcode.min.js"></script>
-
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            body,
-            html {
-                font-family: sans-serif;
-                height: 100%;
-            }
-
-            .center {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-            }
-
-            .card {
-                max-width: min-content;
-                color: white;
-                gap: 2em;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                background-color: #12a79d;
-                padding: 2em;
-                border-radius: 1em;
-            }
-        </style>
     </head>
     <body>
         <div class="center">
-            <div class="card">
-                <h1>Scan this QR code to play a game</h1>
-                <!-- Generated using https://www.the-qrcode-generator.com/ -->
-                <div class="qr-container" id="qr-code" style="image-rendering: pixelated">
-                    <!-- <img style="image-rendering: pixelated" src="../assets/qr.png" height="300px" width="300px" /> -->
-                </div>
+            <div>
+                <p id="time"></p>
+                <p id="date"></p>
+            </div>
+
+            <div id="game-card">
+                <h2 id="game-card__title">Scan to play a game</h2>
+                <div class="qr-container" id="qr-code" style="image-rendering: pixelated"></div>
             </div>
         </div>
     </body>
@@ -62,6 +30,7 @@
         const params = new URLSearchParams(location.search);
 
         let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
+        console.log("Room id", randomRoomId);
 
         // TODO: generate QR-code
         let qrCode = new QRCode(document.getElementById("qr-code"), WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId));
@@ -76,7 +45,17 @@
             }
         });
 
+        function refreshTime() {
+            let now = new Date();
+            let timeElement = document.getElementById("time");
+            let dateElement = document.getElementById("date");
+            timeElement.innerText = now.toLocaleTimeString();
+            dateElement.innerText = now.toLocaleDateString();
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            refreshTime();
+            setInterval(refreshTime, 1000);
             subscribeRoom(randomRoomId);
         });
     </script>

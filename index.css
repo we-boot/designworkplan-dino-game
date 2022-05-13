@@ -1,0 +1,77 @@
+tr {
+    text-align: left;
+}
+
+.center  {
+    display: flex;
+    flex-direction: column;;
+    align-items: center;
+}
+
+#score-table {
+    font-size: 1.5rem;
+    border-collapse: collapse;
+}
+
+#score-table td, #score-table th {
+    padding: 0.2em 0.5em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: sans-serif;
+    height: 100%;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.card {
+    max-width: min-content;
+    color: white;
+    gap: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #12a79d;
+    padding: 2em;
+    border-radius: 1em;
+}
+
+#time {
+    font-size: 3rem;
+}
+
+#date {
+    margin-top: 0.1em;
+    font-size: 2.7rem;
+    opacity: 0.5;
+}
+
+#game-card {
+    margin-top: 1em;
+}
+
+#game-card__title {
+    opacity: 0.8;
+    margin-bottom: 0.5em;
+}
+
+.divider {
+    margin: 1em 0;
+    height: 1px;
+    width: 100%;
+    background: #0002;
+}
