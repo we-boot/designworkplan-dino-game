@@ -65,6 +65,8 @@
         this.images = {};
         this.imagesLoaded = 0;
 
+        this.onGameOver = null;
+
         if (this.isDisabled()) {
             this.setupDisabledRunner();
         } else {
@@ -770,6 +772,8 @@
 
             // Reset the time clock.
             this.time = getTimeStamp();
+
+            this.onGameOver?.();
         },
 
         stop: function () {

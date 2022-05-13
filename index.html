@@ -79,7 +79,6 @@
 
         <script>
             const params = new URLSearchParams(location.search);
-            const name = params.get("name") || "guest";
             const roomId = params.get("roomId") || "default";
 
             let jumpButton = document.getElementById("jump");
@@ -121,6 +120,11 @@
                 duckButton.addEventListener("mouseup", () => {
                     sendAction("duckUp");
                 });
+            }
+
+            let name = prompt("Voer je naam in");
+            if (!name) {
+                name = "Gast" + Math.floor(Math.random() * 9000 + 1000);
             }
 
             // Let the screen know that a controller is connected

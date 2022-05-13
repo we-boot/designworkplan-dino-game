@@ -75,14 +75,21 @@
         async function updateScoreTable() {
             let tbody = document.getElementById("score-table-body");
 
-            tbody.childNodes.forEach((e) => e.remove());
-
             let scores = await getScores();
+
+            while (tbody.firstChild) {
+                tbody.firstChild.remove();
+            }
 
             for (let i = 0; i < scores.length; i++) {
                 let score = scores[i];
 
                 let rowElement = document.createElement("tr");
+
+                if (score.fields.name === name) {
+                    rowElement.style.backgroundColor = "#0001";
+                }
+
                 let rankElement = document.createElement("td");
                 rankElement.innerText = i + 1;
                 rowElement.appendChild(rankElement);
@@ -105,8 +112,15 @@
         let game;
         document.addEventListener("DOMContentLoaded", () => {
             console.log("Starting new game");
+
             game = new Runner(".interstitial-wrapper");
-            console.log("Game", game);
+            game.onGameOver = () => {
+                console.log("Game over!");
+                publishScore(name, Math.round(game.distanceRan)).then(() => {
+                    updateScoreTable();
+                    updateRankText();
+                });
+            };
 
             updateScoreTable();
             updateRankText();
