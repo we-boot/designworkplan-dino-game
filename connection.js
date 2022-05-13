@@ -20,6 +20,8 @@ pubnub.addListener({
     },
 });
 
-pubnub.subscribe({
-    channels: ["game"],
-});
+function subscribeRoom(roomId) {
+    pubnub.subscribe({
+        channels: ["game-" + roomId],
+    });
+}

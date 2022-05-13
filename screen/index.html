@@ -58,13 +58,21 @@
     </body>
 
     <script>
+        const params = new URLSearchParams(location.search);
+        const roomId = params.get("roomId") || "default";
+
+        // TODO: generate QR-code
+
         window.addEventListener("pubnub", (ev) => {
             console.log("Received pubnub event", ev);
 
             let message = ev.detail.message;
             if (message.type === "connected") {
-                location.href = WEBSITE_ROOT + "/screen/game.html";
+                let randomRoomId = window.crypto.randomUUID();
+                location.href = WEBSITE_ROOT + `/screen/game.html?roomId=${encodeURIComponent(randomRoomId)}&name=${encodeURIComponent("guest")}`;
             }
         });
+
+        subscribeRoom(roomId);
     </script>
 </html>

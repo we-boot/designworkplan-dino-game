@@ -78,14 +78,19 @@
         </div>
 
         <script>
+            const params = new URLSearchParams(location.search);
+            const name = params.get("name") || "guest";
+            const roomId = params.get("roomId") || "default";
+
             let jumpButton = document.getElementById("jump");
             let duckButton = document.getElementById("duck");
 
             function sendAction(action) {
                 pubnub.publish({
-                    channel: "game",
+                    channel: "game-" + roomId,
                     message: {
                         type: action,
+                        name: name,
                     },
                 });
             }
@@ -120,9 +125,10 @@
 
             // Let the screen know that a controller is connected
             pubnub.publish({
-                channel: "game",
+                channel: "game-" + roomId,
                 message: {
                     type: "connected",
+                    name: name,
                 },
             });
         </script>

@@ -42,9 +42,11 @@
                 </template>
             </div>
             <div class="center">
+                <h2 id="rank-text"></h2>
                 <table id="score-table">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Naam</th>
                             <th>Score</th>
                         </tr>
@@ -56,6 +58,12 @@
     </body>
 
     <script>
+        const params = new URLSearchParams(location.search);
+        const name = params.get("name") || "guest";
+        const roomId = params.get("roomId") || "default";
+
+        subscribeRoom(roomId);
+
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (evt.keyCode == 32) {
@@ -75,6 +83,9 @@
                 let score = scores[i];
 
                 let rowElement = document.createElement("tr");
+                let rankElement = document.createElement("td");
+                rankElement.innerText = i + 1;
+                rowElement.appendChild(rankElement);
                 let nameElement = document.createElement("td");
                 nameElement.innerText = score.fields.name;
                 rowElement.appendChild(nameElement);
@@ -85,6 +96,12 @@
             }
         }
 
+        async function updateRankText() {
+            let rank = await getRank(name);
+            let rankElement = document.getElementById("rank-text");
+            rankElement.innerText = rank === 0 ? "(nog geen score)" : `Je staat ${rank}e!`;
+        }
+
         let game;
         document.addEventListener("DOMContentLoaded", () => {
             console.log("Starting new game");
@@ -92,6 +109,7 @@
             console.log("Game", game);
 
             updateScoreTable();
+            updateRankText();
         });
 
         function returnHome() {
@@ -103,6 +121,12 @@
         window.addEventListener("pubnub", (ev) => {
             console.log("Received pubnub event", ev);
 
+            let message = ev.detail.message;
+            if (message.name !== name) {
+                // Only listen to messages from the current player
+                return;
+            }
+
             clearInterval(noActivityTimer);
             noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
 
@@ -111,7 +135,6 @@
                 return;
             }
 
-            let message = ev.detail.message;
             if (message.type === "jump") {
                 // Simulate jump button event
                 document.dispatchEvent(
