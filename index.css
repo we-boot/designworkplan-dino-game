@@ -2,9 +2,9 @@ tr {
     text-align: left;
 }
 
-.center  {
+.center {
     display: flex;
-    flex-direction: column;;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -13,7 +13,8 @@ tr {
     border-collapse: collapse;
 }
 
-#score-table td, #score-table th {
+#score-table td,
+#score-table th {
     padding: 0.2em 0.5em;
 }
 
@@ -55,9 +56,9 @@ html {
 }
 
 #date {
-    margin-top: 0.1em;
-    font-size: 2.7rem;
-    opacity: 0.5;
+    /* margin-top: 0.1em; */
+    font-size: 2.5rem;
+    color: #555;
 }
 
 #game-card {
@@ -65,7 +66,8 @@ html {
 }
 
 #game-card__title {
-    opacity: 0.8;
+    color: #555;
+    font-size: 1.5rem;
     margin-bottom: 0.5em;
 }
 
@@ -73,10 +75,5 @@ html {
     margin: 1em 0;
     height: 1px;
     width: 100%;
-    background: #0002;
-}
-
-#particles {
-    width: 400px;
-    height: 120px;
+    color: #0002;
 }
