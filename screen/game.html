@@ -11,6 +11,7 @@
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
         <script src="../game.js"></script>
         <script src="../connection.js"></script>
+        <script src="../scoreboard.js"></script>
     </head>
 
     <body id="t" class="offline">
@@ -57,6 +58,10 @@
             console.log("Starting new game");
             game = new Runner(".interstitial-wrapper");
             console.log("Game", game);
+
+            getScores().then((scores) => {
+                console.log("Scores", scores);
+            });
         });
 
         function returnHome() {
