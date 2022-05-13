@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
         <script src="../connection.js"></script>
+        <script src="../qrcode.min.js"></script>
 
         <style>
             * {
@@ -50,8 +51,8 @@
             <div class="card">
                 <h1>Scan this QR code to play a game</h1>
                 <!-- Generated using https://www.the-qrcode-generator.com/ -->
-                <div class="qr-container">
-                    <img style="image-rendering: pixelated" src="../assets/qr.png" height="300px" width="300px" />
+                <div class="qr-container" id="qr-code" style="image-rendering: pixelated">
+                    <!-- <img style="image-rendering: pixelated" src="../assets/qr.png" height="300px" width="300px" /> -->
                 </div>
             </div>
         </div>
@@ -59,17 +60,19 @@
 
     <script>
         const params = new URLSearchParams(location.search);
-        const roomId = params.get("roomId") || "default";
+
+        let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
 
         // TODO: generate QR-code
+        let qrCode = new QRCode(document.getElementById("qr-code"), WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId));
 
         window.addEventListener("pubnub", (ev) => {
             console.log("Received pubnub event", ev);
 
             let message = ev.detail.message;
             if (message.type === "connected") {
-                let randomRoomId = window.crypto.randomUUID();
-                location.href = WEBSITE_ROOT + `/screen/game.html?roomId=${encodeURIComponent(randomRoomId)}&name=${encodeURIComponent("guest")}`;
+                location.href =
+                    WEBSITE_ROOT + `/screen/game.html?roomId=${encodeURIComponent(randomRoomId)}&name=${encodeURIComponent(message.name)}`;
             }
         });
 

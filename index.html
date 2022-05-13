@@ -123,9 +123,13 @@
             }
 
             let name = prompt("Voer je naam in");
-            if (!name) {
+            if (!name || name.length < 2) {
                 name = "Gast" + Math.floor(Math.random() * 9000 + 1000);
             }
+
+            // Clean up name
+            name = name.trim().slice(0, 12);
+            name = name[0].toUpperCase() + name.slice(1);
 
             // Let the screen know that a controller is connected
             pubnub.publish({

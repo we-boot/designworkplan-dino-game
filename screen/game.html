@@ -44,13 +44,13 @@
             <div class="center">
                 <h2 id="rank-text"></h2>
                 <table id="score-table">
-                    <thead>
+                    <!-- <thead>
                         <tr>
                             <th></th>
                             <th>Naam</th>
                             <th>Score</th>
                         </tr>
-                    </thead>
+                    </thead> -->
                     <tbody id="score-table-body"></tbody>
                 </table>
             </div>
@@ -106,7 +106,7 @@
         async function updateRankText() {
             let rank = await getRank(name);
             let rankElement = document.getElementById("rank-text");
-            rankElement.innerText = rank === 0 ? "(nog geen score)" : `Je staat ${rank}e!`;
+            rankElement.innerText = rank === 0 ? "" : `Je staat ${rank}e!`;
         }
 
         let game;
