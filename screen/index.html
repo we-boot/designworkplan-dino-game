@@ -11,6 +11,16 @@
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
         <script src="../connection.js"></script>
         <script src="../qrcode.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-shape-circle@2.0.5/tsparticles.shape.circle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-color@2.0.5/tsparticles.updater.color.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-opacity@2.0.5/tsparticles.updater.opacity.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-preset-big-circles@2.0.5/tsparticles.preset.bigCircles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script>
     </head>
     <body>
         <div class="center">
@@ -23,6 +33,8 @@
                 <h2 id="game-card__title">Scan to play a game</h2>
                 <div class="qr-container" id="qr-code" style="image-rendering: pixelated"></div>
             </div>
+
+            <div id="particles"></div>
         </div>
     </body>
 
@@ -53,10 +65,16 @@
             dateElement.innerText = now.toLocaleDateString();
         }
 
+        async function loadParticles() {
+            await loadBigCirclesPreset(tsParticles);
+            await tsParticles.load("tsparticles", { preset: "bigCircles" });
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             refreshTime();
             setInterval(refreshTime, 1000);
             subscribeRoom(randomRoomId);
+            loadParticles();
         });
     </script>
 </html>

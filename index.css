@@ -75,3 +75,8 @@ html {
     width: 100%;
     background: #0002;
 }
+
+#particles {
+    width: 400px;
+    height: 120px;
+}
