@@ -41,6 +41,17 @@
                     ></audio>
                 </template>
             </div>
+            <div class="center">
+                <table id="score-table">
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="score-table-body"></tbody>
+                </table>
+            </div>
         </div>
     </body>
 
@@ -53,15 +64,34 @@
             }
         };
 
+        async function updateScoreTable() {
+            let tbody = document.getElementById("score-table-body");
+
+            tbody.childNodes.forEach((e) => e.remove());
+
+            let scores = await getScores();
+
+            for (let i = 0; i < scores.length; i++) {
+                let score = scores[i];
+
+                let rowElement = document.createElement("tr");
+                let nameElement = document.createElement("td");
+                nameElement.innerText = score.fields.name;
+                rowElement.appendChild(nameElement);
+                let scoreElement = document.createElement("td");
+                scoreElement.innerText = score.fields.score;
+                rowElement.appendChild(scoreElement);
+                tbody.appendChild(rowElement);
+            }
+        }
+
         let game;
         document.addEventListener("DOMContentLoaded", () => {
             console.log("Starting new game");
             game = new Runner(".interstitial-wrapper");
             console.log("Game", game);
 
-            getScores().then((scores) => {
-                console.log("Scores", scores);
-            });
+            updateScoreTable();
         });
 
         function returnHome() {
