@@ -131,13 +131,15 @@
             name = name.trim().slice(0, 12);
             name = name[0].toUpperCase() + name.slice(1);
 
-            // Let the screen know that a controller is connected
-            pubnub.publish({
-                channel: "game-" + roomId,
-                message: {
-                    type: "connected",
-                    name: name,
-                },
+            document.addEventListener("DOMContentLoaded", () => {
+                // Let the screen know that a controller is connected
+                pubnub.publish({
+                    channel: "game-" + roomId,
+                    message: {
+                        type: "connected",
+                        name: name,
+                    },
+                });
             });
         </script>
     </body>

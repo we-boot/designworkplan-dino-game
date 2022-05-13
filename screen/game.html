@@ -62,8 +62,6 @@
         const name = params.get("name") || "guest";
         const roomId = params.get("roomId") || "default";
 
-        subscribeRoom(roomId);
-
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (evt.keyCode == 32) {
@@ -111,6 +109,8 @@
 
         let game;
         document.addEventListener("DOMContentLoaded", () => {
+            subscribeRoom(roomId);
+
             console.log("Starting new game");
 
             game = new Runner(".interstitial-wrapper");
