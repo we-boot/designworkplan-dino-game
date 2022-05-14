@@ -117,7 +117,7 @@
             game = new Runner(".interstitial-wrapper");
             game.onGameOver = () => {
                 console.log("Game over!");
-                publishScore(name, Math.round(game.distanceRan)).then(() => {
+                publishScore(name, Math.round(game.distanceRan * 0.025)).then(() => {
                     updateScoreTable();
                     updateRankText();
                 });
