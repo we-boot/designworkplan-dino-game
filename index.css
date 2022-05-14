@@ -22,6 +22,7 @@ tr {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Work Sans", sans-serif;
 }
 
 body,
@@ -51,13 +52,19 @@ html {
     border-radius: 1em;
 }
 
+#card {
+    min-width: 280px;
+}
+
 #time {
     font-size: 3rem;
+    font-weight: bold;
 }
 
 #date {
     font-size: 3rem;
     color: #555;
+    font-weight: bold;
 }
 
 #weather {
