@@ -122,9 +122,9 @@
                 });
             }
 
-            let name = prompt("Voer je naam in");
+            let name = prompt("Please enter your name:");
             if (!name || name.length < 2) {
-                name = "Gast" + Math.floor(Math.random() * 9000 + 1000);
+                name = "Guest " + Math.floor(Math.random() * 9000 + 1000);
             }
 
             // Clean up name
