@@ -1,5 +1,23 @@
 const AIRTABLE_API_KEY = "keyKk5gJgPYyOMs3S";
 
+async function getRandomQuote() {
+    let res = await fetch("https://api.airtable.com/v0/appHzqhkCtvCp6RR7/Quotes", {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        },
+    });
+
+    if (res.ok) {
+        let data = await res.json();
+        if (data.records.length <= 0) return "";
+        let randomIndex = Math.floor(Math.random() * data.records.length);
+        return data.records[randomIndex].fields.quote;
+    } else {
+        return "";
+    }
+}
+
 async function getScores(maxRecords = 100) {
     let res = await fetch(
         "https://api.airtable.com/v0/appHzqhkCtvCp6RR7/DinoGame?sort[0][field]=score&sort[0][direction]=desc&maxRecords=" + maxRecords,
