@@ -13,6 +13,7 @@
         <script src="../weather.js"></script>
         <script src="../scoreboard.js"></script>
         <script src="../qrcode.min.js"></script>
+        <script src="../moment.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
@@ -62,10 +63,11 @@
 
         function refreshTime() {
             let now = new Date();
+            let m = moment();
             let timeElement = document.getElementById("time");
             let dateElement = document.getElementById("date");
-            timeElement.innerText = now.toLocaleTimeString();
-            dateElement.innerText = now.toLocaleDateString();
+            timeElement.innerText = m.format("HH:mm");
+            dateElement.innerText = m.format("dddd, D MMMM");
         }
 
         function hourlyRefresh() {

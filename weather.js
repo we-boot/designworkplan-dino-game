@@ -9,7 +9,7 @@ async function getWeatherDescription() {
 
     if (res.ok) {
         let data = await res.json();
-        return `${data.weather[0].description}\n${data.main.temp}°C`;
+        return `${data.weather[0].description}\n${data.main.temp.toFixed(1)}°C`;
     } else {
         return "";
     }
