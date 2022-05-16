@@ -91,13 +91,13 @@
         }
 
         class RectangleDrawer {
-            constructor() {
-                this.width = Math.random() * 75 + 50;
-                this.height = Math.random() * 200 + 75;
+            particleInit(container, particle) {
+                particle.width = Math.random() * 50 + 75;
+                particle.height = Math.random() * 125 + 100;
             }
 
             draw(context, particle, info) {
-                const { x = 0, y = 0, width = this.width, height = this.height } = info;
+                const { x = 0, y = 0, width = particle.width, height = particle.height } = info;
                 context.moveTo(x, y);
                 context.lineTo(x + width, y);
                 context.lineTo(x + width, y + height);
