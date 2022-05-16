@@ -40,7 +40,6 @@ html {
 }
 
 .card {
-    max-width: min-content;
     color: white;
     gap: 2em;
     display: flex;
@@ -54,6 +53,8 @@ html {
 
 #card {
     min-width: 280px;
+    width: 40%;
+    max-width: 40%;
 }
 
 #time {
@@ -78,6 +79,7 @@ html {
     font-size: 2rem;
 
     color: #555;
+    word-wrap: break-word;
 
     /* color: black;
     font-style: italic;
