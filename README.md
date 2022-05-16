@@ -1,4 +1,4 @@
-# Dino Game
+# Designworkplan Dino Game
 
 This repository contains the code for a dino game, where you use your phone as the controller and a monitor to play.
 
