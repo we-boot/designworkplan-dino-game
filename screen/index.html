@@ -49,7 +49,6 @@
         let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
         console.log("Room id", randomRoomId);
 
-        // TODO: generate QR-code
         let qrCode = new QRCode(document.getElementById("qr-code"), WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId));
 
         window.addEventListener("pubnub", (ev) => {
