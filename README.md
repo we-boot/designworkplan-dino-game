@@ -16,4 +16,4 @@ The controller url is `<WEBSITE_ROOT>`.
 1. Make sure NodeJS is installed
 2. Make sure the `WEBSITE_ROOT` constant is set to `http://localhost:3000` in `src/connection.js`.
 3. Open a terminal and navigate to the folder containing this repository.
-4. Execute `npx serve src` (it will locally host the `src` folder)
+4. Execute `npx serve .` (it will locally host the current folder)
