@@ -5,10 +5,13 @@ window.addEventListener("keydown", (ev) => {
             url = "/screen/index.html";
             break;
         case "2":
-            url = "/screen/static.html";
+            url = "/screen/blocks.html";
             break;
         case "3":
             url = "/screen/sign.html?name=Entrance";
+            break;
+        case "4":
+            url = "/screen/qr.html";
             break;
     }
 

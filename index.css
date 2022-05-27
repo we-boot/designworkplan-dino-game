@@ -18,6 +18,32 @@ tr {
     padding: 0.2em 0.5em;
 }
 
+#sign-title {
+    color: white;
+    font-size: 4em;
+    font-weight: bold;
+}
+
+.left-right-animation {
+    animation: left-right 10s ease-in-out infinite;
+}
+
+@keyframes left-right {
+    0% {
+        transform: translateX(0%);
+    }
+    25% {
+        transform: translateX(-10%);
+    }
+    75% {
+        transform: translateX(10%);
+    }
+    0% {
+        transform: translateX(0%);
+    }
+    
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -29,6 +55,10 @@ body,
 html {
     font-family: sans-serif;
     height: 100%;
+}
+
+body {
+    background-color: black;
 }
 
 .center {
@@ -59,25 +89,26 @@ html {
 #time {
     font-size: 3rem;
     font-weight: bold;
+    color: white;
 }
 
 #date {
     font-size: 3rem;
-    color: #555;
+    color: white;
     font-weight: bold;
 }
 
 #weather {
     margin-top: 1.5rem;
     font-size: 2rem;
-    color: #555;
+    color: white;
 }
 
 #quote {
     margin-top: 1.5rem;
     font-size: 2rem;
 
-    color: #555;
+    color: white;
     word-wrap: break-word;
 
     /* color: black;
@@ -90,7 +121,7 @@ html {
 }
 
 #game-card__title {
-    color: #555;
+    color: white;
     font-size: 1.2rem;
     margin-bottom: 0.5em;
 }
