@@ -62,6 +62,7 @@
         const params = new URLSearchParams(location.search);
         const name = params.get("name") || "guest";
         const roomId = params.get("roomId") || "default";
+        const redirect = params.has("redirect") ? decodeURIComponent(params.get("redirect")) : "/screen/index.html";
 
         document.onkeydown = function (evt) {
             evt = evt || window.event;
@@ -128,7 +129,7 @@
         });
 
         function returnHome() {
-            location.href = WEBSITE_ROOT + "/screen/index.html?roomId=" + encodeURIComponent(roomId);
+            location.href = WEBSITE_ROOT + redirect + "?roomId=" + encodeURIComponent(roomId);
         }
 
         let noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);

@@ -42,7 +42,10 @@
             let message = ev.detail.message;
             if (message.type === "connected") {
                 location.href =
-                    WEBSITE_ROOT + `/screen/game.html?roomId=${encodeURIComponent(randomRoomId)}&name=${encodeURIComponent(message.name)}`;
+                    WEBSITE_ROOT +
+                    `/screen/game.html?redirect=${encodeURIComponent("/screen/qr.html")}&roomId=${encodeURIComponent(
+                        randomRoomId
+                    )}&name=${encodeURIComponent(message.name)}`;
             }
         });
 

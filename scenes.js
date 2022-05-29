@@ -16,6 +16,6 @@ window.addEventListener("keydown", (ev) => {
     }
 
     if (url) {
-        location.href = url;
+        location.href = WEBSITE_ROOT + url;
     }
 });
