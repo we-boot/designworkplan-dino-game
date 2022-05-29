@@ -60,7 +60,7 @@
             if (message.type === "connected") {
                 location.href =
                     WEBSITE_ROOT +
-                    `/screen/game.html?redirect=${encodeURIComponent("/screen/index.html")}&roomId=${encodeURIComponent(
+                    `/screen/game.html?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(
                         randomRoomId
                     )}&name=${encodeURIComponent(message.name)}`;
             }

@@ -8,7 +8,7 @@ window.addEventListener("keydown", (ev) => {
             url = "/screen/blocks.html";
             break;
         case "3":
-            url = "/screen/sign.html?name=Entrance";
+            url = "/screen/sign.html?title=Entrance&rotation=0";
             break;
         case "4":
             url = "/screen/qr.html";

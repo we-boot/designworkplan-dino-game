@@ -129,7 +129,7 @@
         });
 
         function returnHome() {
-            location.href = WEBSITE_ROOT + redirect + "?roomId=" + encodeURIComponent(roomId);
+            location.href = redirect;
         }
 
         let noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
