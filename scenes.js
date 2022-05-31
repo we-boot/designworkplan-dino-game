@@ -10,7 +10,13 @@ window.addEventListener("keydown", (ev) => {
         case "3":
             url = "/screen/sign.html?title=Entrance&rotation=0";
             break;
-        case "4":
+          case "4":
+            url = "/screen/sign.html?title=Google%20L8%20Demo&rotation=0";
+            break;
+          case "5":
+            url = "/screen/sign.html?title=MicroKitchen%20Late%20Nigth&20Snacks&rotation=90";
+            break;
+          case "0":
             url = "/screen/qr.html";
             break;
     }
