@@ -84,6 +84,10 @@ body {
     border-radius: 1em;
 }
 
+#qr-code > img {
+    border: 12px solid white;
+}
+
 #card {
     min-width: 280px;
     max-width: 40%;
