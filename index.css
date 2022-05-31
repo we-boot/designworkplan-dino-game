@@ -6,6 +6,7 @@ tr {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 50%;
 }
 
 #score-table {
@@ -21,8 +22,9 @@ tr {
 
 #sign-title {
     color: white;
-    font-size: 4em;
+    font-size: 5em;
     font-weight: bold;
+    max-width: 50%;
 }
 
 .left-right-animation {
