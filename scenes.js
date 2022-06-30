@@ -16,6 +16,12 @@ window.addEventListener("keydown", (ev) => {
         case "5":
             url = "/screen/sign?title=MicroKitchen%20Late%20Night%20Snacks&rotation=180";
             break;
+        case "6":
+            url = "/screen/media?src=";
+            break;
+        case "7":
+            url = "/screen/doodle";
+            break;
         case "0":
             url = "/screen/qr";
             break;

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>designworkplan dino game</title>
+        <link rel="stylesheet" href="../index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../connection.js"></script>
+        <script src="../scoreboard.js"></script>
+        <script src="../scenes.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-shape-circle@2.0.5/tsparticles.shape.circle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-color@2.0.5/tsparticles.updater.color.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-opacity@2.0.5/tsparticles.updater.opacity.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
+        <script src="../background.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="center">
+            <img src="https://google-doodle.weboot.nl/api/doodle" />
+            <canvas id="background-canvas"></canvas>
+        </div>
+    </body>
+
+    <script>
+        const params = new URLSearchParams(location.search);
+        let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
+        console.log("Room id", randomRoomId);
+
+        window.addEventListener("pubnub", (ev) => {
+            console.log("Received pubnub event", ev);
+
+            let message = ev.detail.message;
+            if (message.type === "connected") {
+                location.href =
+                    WEBSITE_ROOT +
+                    `/screen/game.html?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(
+                        randomRoomId
+                    )}&name=${encodeURIComponent(message.name)}`;
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            subscribeRoom(randomRoomId);
+            loadParticles();
+        });
+
+        getLatestDoodle();
+    </script>
+</html>
