@@ -27,6 +27,14 @@
     </head>
     <body>
         <div class="center">
+            <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
+                <label for="title-input">Sign title</label>
+                <input name="title" id="title-input" type="text" />
+                <label for="rotation-input">Rotation (degrees)</label>
+                <input name="rotation" id="rotation-input" type="number" />
+                <input type="submit" />
+            </form>
+
             <h2 id="sign-title"></h2>
             <div class="left-right-animation">
                 <svg id="sign-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 300px; height: 300px">
@@ -62,13 +70,17 @@
             subscribeRoom(randomRoomId);
             loadParticles();
 
-            let signRotation = params.has("rotation") ? parseInt(params.get("rotation")) : 0;
-            let signTitle = params.has("title") ? params.get("title") : "Follow";
-            let signTitleElement = document.getElementById("sign-title");
-            signTitleElement.innerText = signTitle;
+            if (params.has("title")) {
+                let signRotation = params.has("rotation") ? parseInt(params.get("rotation")) : 0;
+                let signTitle = params.has("title") ? params.get("title") : "Follow";
+                let signTitleElement = document.getElementById("sign-title");
+                signTitleElement.innerText = signTitle;
 
-            let signElement = document.getElementById("sign-icon");
-            signElement.style.transform = `rotate(${signRotation}deg)`;
+                let signElement = document.getElementById("sign-icon");
+                signElement.style.transform = `rotate(${signRotation}deg)`;
+
+                document.getElementById("setup-form").remove();
+            }
         });
     </script>
 </html>

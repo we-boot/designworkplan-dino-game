@@ -27,6 +27,11 @@
     </head>
     <body>
         <div class="center">
+            <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
+                <label for="url-input">Media URL</label>
+                <input name="src" id="url-input" type="text" />
+                <input type="submit" />
+            </form>
             <iframe
                 id="media-source"
                 title="Media Player"
@@ -60,10 +65,14 @@
             subscribeRoom(randomRoomId);
             loadParticles();
 
-            let mediaElement = document.getElementById("media-source");
-            mediaElement.src = params.get("src") || "https://www.youtube.com/embed/ARgdBb2Go0w";
-            mediaElement.width = params.has("width") ? parseInt(params.get("width")) : 560;
-            mediaElement.height = params.has("height") ? parseInt(params.get("height")) : 315;
+            if (params.get("src")) {
+                let mediaElement = document.getElementById("media-source");
+                mediaElement.width = params.has("width") ? parseInt(params.get("width")) : 560;
+                mediaElement.height = params.has("height") ? parseInt(params.get("height")) : 315;
+                mediaElement.src = params.get("src");
+
+                document.getElementById("setup-form").remove();
+            }
         });
     </script>
 </html>
