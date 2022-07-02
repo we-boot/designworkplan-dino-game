@@ -30,8 +30,13 @@
             <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
                 <label for="title-input">Sign title</label>
                 <input name="title" id="title-input" type="text" />
-                <label for="rotation-input">Rotation (degrees)</label>
-                <input name="rotation" id="rotation-input" type="number" />
+                <label for="rotation-input">Direction</label>
+                <select id="rotation-input" name="rotation">
+                    <option value="0">Left</option>
+                    <option value="180">Right</option>
+                </select>
+                <!-- <label for="rotation-input">Rotation (degrees)</label> -->
+                <!-- <input name="rotation" id="rotation-input" type="number" /> -->
                 <input type="submit" />
             </form>
 
