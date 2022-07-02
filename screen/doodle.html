@@ -27,7 +27,8 @@
     </head>
     <body>
         <div class="center">
-            <img src="https://google-doodle.weboot.nl/api/doodle" />
+            <img id="doodle-image" src="" />
+            <h2 id="doodle-title"></h2>
             <canvas id="background-canvas"></canvas>
         </div>
     </body>
@@ -50,9 +51,26 @@
             }
         });
 
+        async function refreshDoodle() {
+            let doodleElement = document.getElementById("doodle-image");
+            let doodleTitleElement = document.getElementById("doodle-title");
+
+            let res = await fetch("https://google-doodle.weboot.nl/api/doodle");
+            if (!res.ok) {
+                console.error("Could not fetch doodle information", await res.text());
+                return;
+            }
+
+            let data = await res.json();
+            doodleElement.src = data.alternate_url;
+            doodleTitleElement.innerText = data.title;
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             subscribeRoom(randomRoomId);
             loadParticles();
+            refreshDoodle();
+            setInterval(refreshDoodle, 1000 * 60 * 60 * 1);
         });
 
         getLatestDoodle();

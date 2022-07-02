@@ -6,7 +6,6 @@ tr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
 
 #score-table {
@@ -142,4 +141,9 @@ body {
 
 #rank-text {
     color: white;
+}
+
+#doodle-title {
+    color: white;
+    font-weight: bold;
 }
