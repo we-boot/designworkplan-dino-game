@@ -28,18 +28,23 @@
     <body>
         <div class="center">
             <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
-                <label for="url-input">Media URL</label>
-                <input name="src" id="url-input" type="text" />
+                <label for="src-input">Image URL or YouTube video ID</label>
+                <input name="src" id="src-input" type="text" />
+                <select name="type">
+                    <option value="image">Image</option>
+                    <option value="youtube">YouTube video</option>
+                </select>
                 <input type="submit" />
             </form>
+            <img style="max-width: 90%; max-height: 90%" id="image-media" />
             <iframe
-                id="media-source"
+                style="display: block"
+                id="video-media"
                 title="Media Player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; "
                 allowfullscreen
             ></iframe>
-            <canvas id="background-canvas"></canvas>
         </div>
     </body>
 
@@ -65,12 +70,23 @@
             subscribeRoom(randomRoomId);
             loadParticles();
 
-            if (params.get("src")) {
-                let mediaElement = document.getElementById("media-source");
-                mediaElement.width = params.has("width") ? parseInt(params.get("width")) : 560;
-                mediaElement.height = params.has("height") ? parseInt(params.get("height")) : 315;
-                mediaElement.src = params.get("src");
+            let type = params.get("type");
+            let imageElement = document.getElementById("image-media");
+            let videoElement = document.getElementById("video-media");
 
+            if (type === "image") {
+                imageElement.src = params.get("src");
+                videoElement.remove();
+            } else if (type === "youtube") {
+                videoElement.width = params.has("width") ? parseInt(params.get("width")) : window.innerWidth * 0.75;
+                videoElement.height = params.has("height") ? parseInt(params.get("height")) : window.innerHeight * 0.75;
+                videoElement.src = "https://www.youtube.com/embed/" + params.get("src");
+                imageElement.remove();
+            }
+
+            console.log("remove form", type);
+            if (type) {
+                console.log("remove form");
                 document.getElementById("setup-form").remove();
             }
         });

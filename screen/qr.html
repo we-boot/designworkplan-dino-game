@@ -21,7 +21,7 @@
         <div class="center">
             <div id="card">
                 <div id="game-card">
-                     <p id="game-card__title">OK, Google! <br>Can I play a game?<br><br>Scan to play</p>
+                    <p id="game-card__title">OK, Google! <br />Can I play a game?<br /><br />Scan to play</p>
                     <div class="qr-container" id="qr-code" style="image-rendering: pixelated"></div>
                 </div>
             </div>
@@ -34,7 +34,10 @@
         let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
         console.log("Room id", randomRoomId);
 
-        let qrCode = new QRCode(document.getElementById("qr-code"), WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId));
+        let qrCode = new QRCode(document.getElementById("qr-code"), {
+            text: WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId),
+            correctLevel: QRCode.CorrectLevel.H,
+        });
 
         window.addEventListener("pubnub", (ev) => {
             console.log("Received pubnub event", ev);
