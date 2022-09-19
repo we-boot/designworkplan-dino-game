@@ -144,6 +144,10 @@ body {
 }
 
 #doodle-title {
+    margin-top: 1em;
     color: white;
     font-weight: bold;
+    font-size: 2.2em;
+    max-width: 80vw;
+    text-align: center;
 }
