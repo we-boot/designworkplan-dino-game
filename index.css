@@ -151,3 +151,7 @@ body {
     max-width: 80vw;
     text-align: center;
 }
+
+#score-table-body tr:first-child {
+    color: gold;
+}
