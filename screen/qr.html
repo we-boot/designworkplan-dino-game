@@ -34,8 +34,10 @@
         let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
         console.log("Room id", randomRoomId);
 
+        let qrContent = WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId);
+        console.log("qrContent", qrContent);
         let qrCode = new QRCode(document.getElementById("qr-code"), {
-            text: WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId),
+            text: qrContent,
             correctLevel: QRCode.CorrectLevel.H,
         });
 
