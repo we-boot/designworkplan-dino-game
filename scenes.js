@@ -10,6 +10,9 @@ window.addEventListener("keydown", (ev) => {
         case "3":
             url = "/screen/sign";
             break;
+        case "4":
+            url = "/screen/cards";
+            break;
         // case "3":
         //     url = "/screen/sign?title=Entrance&rotation=0";
         //     break;
