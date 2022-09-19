@@ -43,7 +43,7 @@ async function loadParticles() {
             number: { value: 12 },
             color: { value: ["#4285F4", "#DB4437", "#F4B400", "#0F9D58"] },
             shape: { type: "rect", options: {} },
-            opacity: { value: 0.48 },
+            opacity: { value: 0.6 },
             size: { value: { min: 100, max: 300 } },
             move: {
                 enable: true,
