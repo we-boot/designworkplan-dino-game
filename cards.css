@@ -1,0 +1,199 @@
+/* Source code taken from https://codepen.io/designworkplan/pen/gOzwjXQ */
+
+body {
+    margin: 0;
+    font-family: "GoogleSans-Medium";
+    font-size: 20px;
+    background-color: black;
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+
+#prev,
+#next {
+    background: white;
+    padding: 2px 5px;
+    font-weight: 200;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 0 0.5em;
+    width: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: transl;
+}
+
+#prev {
+    left: 20px;
+}
+#next {
+    left: 90px;
+}
+
+#carousel-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+#carousel-content {
+    height: 100%;
+}
+#carousel-dots {
+    position: absolute;
+    bottom: 120px;
+}
+#carousel-content,
+#carousel-dots {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    margin: 0 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.8s ease-in;
+    opacity: 0;
+    border-radius: 7px;
+    box-shadow: 0px 0px 45px 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
+
+.left {
+    position: absolute;
+    transform-origin: center;
+    animation: card-out 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8);
+    transform: translateX(-30%) scale(0.85);
+    opacity: 1 !important;
+    z-index: 0;
+}
+
+.selected {
+    transform-origin: center;
+    animation: card-in 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8);
+    transform: translateX(0%);
+    opacity: 1 !important;
+    z-index: 1;
+}
+
+.right {
+    position: absolute;
+    transform-origin: center;
+    animation: new-card 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8);
+    transform: translateX(22%) scale(0.85);
+    opacity: 1 !important;
+    z-index: 0;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(200, 200, 200);
+    border-radius: 50%;
+    margin: 0 0.5rem;
+    cursor: pointer;
+}
+
+.active-dot {
+    transform: scale(1.2);
+    background-color: rgb(120, 120, 120);
+}
+
+@keyframes card-in {
+    0% {
+        z-index: 1;
+    }
+    50% {
+        transform: translateX(30%);
+    }
+    80% {
+        z-index: 20;
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes card-out {
+    0% {
+        z-index: 20;
+        transform: translateX(0px);
+    }
+    50% {
+        transform: translateX(-30%);
+    }
+    80% {
+        z-index: 1;
+    }
+    100% {
+        transform: translateX(-30%) scale(0.85);
+    }
+}
+
+@keyframes new-card {
+    from {
+        transform: translateX(0%) scale(0.5);
+    }
+    to {
+        transform: translateX(22%) scale(0.85);
+    }
+}
+
+.card > h2 {
+    margin-top: 0.5em;
+    padding-left: 20px;
+    padding-right: 50px;
+    color: white;
+}
+
+.card > p {
+    padding-left: 20px;
+    padding-right: 50px;
+    color: white;
+    font-size: 1.5em;
+}
+
+.image {
+    height: 250px;
+    opacity: 0.7;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.blue {
+    background-color: #4285f4;
+}
+.red {
+    background-color: #ea4335;
+}
+.yellow {
+    background-color: #fbbc05;
+}
+.green {
+    background-color: #34a853;
+}
+.black {
+    background-color: black;
+    box-shadow: 0px 0px 45px 5px rgba(255, 255, 255, 0.2);
+    color: #fbbc05;
+}
