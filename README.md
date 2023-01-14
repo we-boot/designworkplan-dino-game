@@ -17,3 +17,9 @@ The controller url is `<WEBSITE_ROOT>`.
 2. Make sure the `WEBSITE_ROOT` constant is set to `http://localhost:3000` in `src/connection.js`.
 3. Open a terminal and navigate to the folder containing this repository.
 4. Execute `npx serve .` (it will locally host the current folder)
+
+## AirTable
+
+Some information is fetched from AirTable. To edit this information, go to the following link:
+
+[https://airtable.com/appHzqhkCtvCp6RR7/tblu073RHDj4Tldbv/viw67TD4mGUvqRIcz](https://airtable.com/appHzqhkCtvCp6RR7/tblu073RHDj4Tldbv/viw67TD4mGUvqRIcz)
