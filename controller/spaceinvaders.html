@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>designworkplan dino game</title>
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../index.js"></script>
+        <script src="../connection.js"></script>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                user-select: none;
+                touch-action: manipulation;
+            }
+
+            body,
+            html {
+                height: 100%;
+                overflow: hidden;
+                background: black;
+            }
+
+            .button-container {
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                gap: 1em;
+                padding: 1em;
+            }
+
+            .button {
+                border-radius: 1em;
+                border-collapse: collapse;
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .button:active {
+                opacity: 0.7;
+            }
+
+            .button-icon {
+                max-width: 50vw;
+                max-height: 40vh;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="button-container">
+            <div id="left" class="button" style="background: green">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                    />
+                </svg>
+            </div>
+            <div id="shoot" class="button" style="background: red">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+                    />
+                </svg>
+            </div>
+            <div id="right" class="button" style="background: blue">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                    />
+                </svg>
+            </div>
+        </div>
+
+        <script>
+            const params = new URLSearchParams(location.search);
+            const roomId = params.get("roomId") || "default";
+
+            let leftButton = document.getElementById("left");
+            let shootButton = document.getElementById("shoot");
+            let rightButton = document.getElementById("right");
+
+            function sendAction(action) {
+                pubnub.publish({
+                    channel: "game-" + roomId,
+                    message: {
+                        type: action,
+                        name: name,
+                    },
+                });
+            }
+
+            const IS_MOBILE = /Android/.test(window.navigator.userAgent) || /iPad|iPhone|iPod/.test(window.navigator.platform);
+
+            if (IS_MOBILE) {
+                leftButton.addEventListener("touchstart", () => {
+                    sendAction("leftDown");
+                });
+                leftButton.addEventListener("touchend", () => {
+                    sendAction("leftUp");
+                });
+
+                shootButton.addEventListener("touchstart", () => {
+                    sendAction("shootDown");
+                });
+                shootButton.addEventListener("touchend", () => {
+                    sendAction("shootUp");
+                });
+
+                rightButton.addEventListener("touchstart", () => {
+                    sendAction("rightDown");
+                });
+                rightButton.addEventListener("touchend", () => {
+                    sendAction("rightUp");
+                });
+            } else {
+                leftButton.addEventListener("mousedown", () => {
+                    sendAction("leftDown");
+                });
+                leftButton.addEventListener("mouseup", () => {
+                    sendAction("leftUp");
+                });
+
+                shootButton.addEventListener("mousedown", () => {
+                    sendAction("shootDown");
+                });
+                shootButton.addEventListener("mouseup", () => {
+                    sendAction("shootUp");
+                });
+
+                rightButton.addEventListener("mousedown", () => {
+                    sendAction("rightDown");
+                });
+                rightButton.addEventListener("mouseup", () => {
+                    sendAction("rightUp");
+                });
+            }
+
+            let name = prompt("Please enter your name:");
+            if (!name || name.length < 2) {
+                name = "Guest " + Math.floor(Math.random() * 9000 + 1000);
+            }
+
+            // Clean up name
+            name = name.trim().slice(0, 12);
+            name = name[0].toUpperCase() + name.slice(1);
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // Let the screen know that a controller is connected
+                pubnub.publish({
+                    channel: "game-" + roomId,
+                    message: {
+                        type: "connected",
+                        name: name,
+                    },
+                });
+            });
+        </script>
+    </body>
+</html>

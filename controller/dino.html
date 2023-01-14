@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>designworkplan dino game</title>
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../index.js"></script>
+        <script src="../connection.js"></script>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                user-select: none;
+                touch-action: manipulation;
+            }
+
+            body,
+            html {
+                height: 100%;
+                overflow: hidden;
+                background: black;
+            }
+
+            .button-container {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                padding: 1em;
+            }
+
+            .button {
+                border-radius: 1em;
+                border-collapse: collapse;
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .button:active {
+                opacity: 0.7;
+            }
+
+            .button-icon {
+                max-width: 50vw;
+                max-height: 40vh;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="button-container">
+            <div id="jump" class="button" style="background: red">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M416 352c-8.188 0-16.38-3.125-22.62-9.375L224 173.3l-169.4 169.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25C432.4 348.9 424.2 352 416 352z"
+                    />
+                </svg>
+            </div>
+            <div id="duck" class="button" style="background: blue">
+                <svg width="100%" height="100%" class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        fill="white"
+                        d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"
+                    />
+                </svg>
+            </div>
+        </div>
+
+        <script>
+            const params = new URLSearchParams(location.search);
+            const roomId = params.get("roomId") || "default";
+
+            let jumpButton = document.getElementById("jump");
+            let duckButton = document.getElementById("duck");
+
+            function sendAction(action) {
+                pubnub.publish({
+                    channel: "game-" + roomId,
+                    message: {
+                        type: action,
+                        name: name,
+                    },
+                });
+            }
+
+            const IS_MOBILE = /Android/.test(window.navigator.userAgent) || /iPad|iPhone|iPod/.test(window.navigator.platform);
+
+            if (IS_MOBILE) {
+                jumpButton.addEventListener("touchstart", () => {
+                    sendAction("jump");
+                });
+
+                duckButton.addEventListener("touchstart", () => {
+                    sendAction("duckDown");
+                });
+
+                duckButton.addEventListener("touchend", () => {
+                    sendAction("duckUp");
+                });
+            } else {
+                jumpButton.addEventListener("mousedown", () => {
+                    sendAction("jump");
+                });
+
+                duckButton.addEventListener("mousedown", () => {
+                    sendAction("duckDown");
+                });
+
+                duckButton.addEventListener("mouseup", () => {
+                    sendAction("duckUp");
+                });
+            }
+
+            let name = prompt("Please enter your name:");
+            if (!name || name.length < 2) {
+                name = "Guest " + Math.floor(Math.random() * 9000 + 1000);
+            }
+
+            // Clean up name
+            name = name.trim().slice(0, 12);
+            name = name[0].toUpperCase() + name.slice(1);
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // Let the screen know that a controller is connected
+                pubnub.publish({
+                    channel: "game-" + roomId,
+                    message: {
+                        type: "connected",
+                        name: name,
+                    },
+                });
+            });
+        </script>
+    </body>
+</html>

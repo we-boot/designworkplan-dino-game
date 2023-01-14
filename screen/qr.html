@@ -36,7 +36,7 @@
         let roomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
         console.log("Room id", roomId);
 
-        let qrContent = WEBSITE_ROOT + `/?roomId=${encodeURIComponent(roomId)}&game=${encodeURIComponent(game)}`;
+        let qrContent = WEBSITE_ROOT + `/controller/${game}?roomId=${encodeURIComponent(roomId)}&game=${encodeURIComponent(game)}`;
         console.log("qrContent", qrContent);
         let qrCode = new QRCode(document.getElementById("qr-code"), {
             text: qrContent,

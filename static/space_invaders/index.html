@@ -135,12 +135,13 @@
                 console.log("Starting new game");
 
                 globalThis.onGameOver = (score) => {
-                    gameOver = true;
                     console.log("Game over!", score);
                     publishScore(name, score).then(() => {
                         updateScoreTable(name);
                         updateRankText(name);
                     });
+
+                    setTimeout(() => (gameOver = true), 3000);
                 };
 
                 updateScoreTable(name);
@@ -171,8 +172,13 @@
                     return;
                 }
 
-                if (message.type === "jumpDown") {
-                    // Simulate jump button event
+                let playButton = document.getElementById("play-game");
+                if (playButton && playButton.className !== "hide") {
+                    playButton.click();
+                }
+
+                if (message.type === "shootDown") {
+                    // Simulate shoot button event
                     document.dispatchEvent(
                         new KeyboardEvent("keydown", {
                             keyCode: 32,
@@ -180,8 +186,8 @@
                             detail: 0,
                         })
                     );
-                } else if (message.type === "jumpUp") {
-                    // Simulate jump button event
+                } else if (message.type === "shootUp") {
+                    // Simulate shoot button event
                     document.dispatchEvent(
                         new KeyboardEvent("keyup", {
                             keyCode: 32,
@@ -190,7 +196,7 @@
                         })
                     );
                 } else if (message.type === "leftDown") {
-                    // Simulate duck button event
+                    // Simulate left button event
                     document.dispatchEvent(
                         new KeyboardEvent("keydown", {
                             keyCode: 37,
@@ -198,7 +204,7 @@
                         })
                     );
                 } else if (message.type === "leftUp") {
-                    // Simulate duck button event
+                    // Simulate left button event
                     document.dispatchEvent(
                         new KeyboardEvent("keyup", {
                             keyCode: 37,
@@ -206,7 +212,7 @@
                         })
                     );
                 } else if (message.type === "rightDown") {
-                    // Simulate duck button event
+                    // Simulate right button event
                     document.dispatchEvent(
                         new KeyboardEvent("keydown", {
                             keyCode: 39,
@@ -214,7 +220,7 @@
                         })
                     );
                 } else if (message.type === "rightUp") {
-                    // Simulate duck button event
+                    // Simulate right button event
                     document.dispatchEvent(
                         new KeyboardEvent("keyup", {
                             keyCode: 39,
