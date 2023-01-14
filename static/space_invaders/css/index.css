@@ -311,7 +311,7 @@ body {
   height: 100%;
 
   position: absolute;
-  top: -23px;
+  /* top: -23px; */
 
   display: flex;
   justify-content: center;
