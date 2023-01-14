@@ -29,7 +29,10 @@ window.addEventListener("keydown", (ev) => {
             url = "/screen/doodle";
             break;
         case "0":
-            url = "/screen/qr";
+            url = "/screen/qr?game=dino";
+            break;
+        case "-":
+            url = "/screen/qr?game=spaceinvaders";
             break;
     }
 

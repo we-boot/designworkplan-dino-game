@@ -61,8 +61,11 @@
     <script>
         const params = new URLSearchParams(location.search);
         const name = params.get("name") || "guest";
+        const game = params.get("game") || "dino";
         const roomId = params.get("roomId") || "default";
         const redirect = params.has("redirect") ? decodeURIComponent(params.get("redirect")) : "/screen/index.html";
+
+        console.log({ game, name, roomId, redirect });
 
         document.onkeydown = function (evt) {
             evt = evt || window.event;
@@ -109,16 +112,16 @@
             rankElement.innerText = rank === 0 ? "" : `Je staat ${rank}e!`;
         }
 
-        let game;
+        let gameInstance;
         document.addEventListener("DOMContentLoaded", () => {
             subscribeRoom(roomId);
 
             console.log("Starting new game");
 
-            game = new Runner(".interstitial-wrapper");
-            game.onGameOver = () => {
+            gameInstance = new Runner(".interstitial-wrapper");
+            gameInstance.onGameOver = () => {
                 console.log("Game over!");
-                publishScore(name, Math.round(game.distanceRan * 0.025)).then(() => {
+                publishScore(name, Math.round(gameInstance.distanceRan * 0.025)).then(() => {
                     updateScoreTable();
                     updateRankText();
                 });
@@ -146,8 +149,8 @@
             clearInterval(noActivityTimer);
             noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
 
-            if (game.crashed) {
-                game.restart();
+            if (gameInstance.crashed) {
+                gameInstance.restart();
                 return;
             }
 

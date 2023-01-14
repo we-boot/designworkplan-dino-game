@@ -31,10 +31,12 @@
     <script>
         const params = new URLSearchParams(location.search);
 
-        let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
-        console.log("Room id", randomRoomId);
+        let game = params.get("game") || "dino";
 
-        let qrContent = WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId);
+        let roomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
+        console.log("Room id", roomId);
+
+        let qrContent = WEBSITE_ROOT + `/?roomId=${encodeURIComponent(roomId)}&game=${encodeURIComponent(game)}`;
         console.log("qrContent", qrContent);
         let qrCode = new QRCode(document.getElementById("qr-code"), {
             text: qrContent,
@@ -48,14 +50,14 @@
             if (message.type === "connected") {
                 location.href =
                     WEBSITE_ROOT +
-                    `/screen/game.html?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(
-                        randomRoomId
-                    )}&name=${encodeURIComponent(message.name)}`;
+                    `/screen/game?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(
+                        message.name
+                    )}&game=${encodeURIComponent(game)}`;
             }
         });
 
         document.addEventListener("DOMContentLoaded", () => {
-            subscribeRoom(randomRoomId);
+            subscribeRoom(roomId);
         });
     </script>
 </html>
