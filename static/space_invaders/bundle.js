@@ -631,6 +631,9 @@
                 this.gameView.pause();
                 this.gameView.addLivesText(this.ctx);
                 this.gameView.gameOver();
+                if (globalThis.onGameOver) {
+                    globalThis.onGameOver(this.score);
+                }
             };
 
             Game.prototype.winRound = function () {

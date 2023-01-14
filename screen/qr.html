@@ -50,9 +50,9 @@
             if (message.type === "connected") {
                 location.href =
                     WEBSITE_ROOT +
-                    `/screen/game?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(
-                        message.name
-                    )}&game=${encodeURIComponent(game)}`;
+                    `${game === "dino" ? "/screen/game" : "/static/space_invaders"}?redirect=${encodeURIComponent(
+                        location.href
+                    )}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(message.name)}`;
             }
         });
 

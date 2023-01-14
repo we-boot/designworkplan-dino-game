@@ -61,11 +61,10 @@
     <script>
         const params = new URLSearchParams(location.search);
         const name = params.get("name") || "guest";
-        const game = params.get("game") || "dino";
         const roomId = params.get("roomId") || "default";
         const redirect = params.has("redirect") ? decodeURIComponent(params.get("redirect")) : "/screen/index.html";
 
-        console.log({ game, name, roomId, redirect });
+        console.log({ name, roomId, redirect });
 
         document.onkeydown = function (evt) {
             evt = evt || window.event;
@@ -74,43 +73,6 @@
                 box.style.visibility = "hidden";
             }
         };
-
-        async function updateScoreTable() {
-            let tbody = document.getElementById("score-table-body");
-
-            let scores = await getScores();
-
-            while (tbody.firstChild) {
-                tbody.firstChild.remove();
-            }
-
-            for (let i = 0; i < scores.length; i++) {
-                let score = scores[i];
-
-                let rowElement = document.createElement("tr");
-
-                if (score.fields.name === name) {
-                    rowElement.style.backgroundColor = "#0001";
-                }
-
-                let rankElement = document.createElement("td");
-                rankElement.innerText = i + 1;
-                rowElement.appendChild(rankElement);
-                let nameElement = document.createElement("td");
-                nameElement.innerText = score.fields.name;
-                rowElement.appendChild(nameElement);
-                let scoreElement = document.createElement("td");
-                scoreElement.innerText = score.fields.score;
-                rowElement.appendChild(scoreElement);
-                tbody.appendChild(rowElement);
-            }
-        }
-
-        async function updateRankText() {
-            let rank = await getRank(name);
-            let rankElement = document.getElementById("rank-text");
-            rankElement.innerText = rank === 0 ? "" : `Je staat ${rank}e!`;
-        }
 
         let gameInstance;
         document.addEventListener("DOMContentLoaded", () => {
@@ -122,13 +84,13 @@
             gameInstance.onGameOver = () => {
                 console.log("Game over!");
                 publishScore(name, Math.round(gameInstance.distanceRan * 0.025)).then(() => {
-                    updateScoreTable();
-                    updateRankText();
+                    updateScoreTable(name);
+                    updateRankText(name);
                 });
             };
 
-            updateScoreTable();
-            updateRankText();
+            updateScoreTable(name);
+            updateRankText(name);
         });
 
         function returnHome() {

@@ -6,6 +6,11 @@
         <script src="./space_invaders/bundle.js"></script>
         <link rel="stylesheet" type="text/css" href="./space_invaders/css/index.css" />
         <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet" />
+        <link rel="stylesheet" href="../../index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../../connection.js"></script>
+        <script src="../../scoreboard.js"></script>
     </head>
 
     <body>
@@ -97,6 +102,127 @@
             <img class="hide" id="ship-death" src="./space_invaders/images/ship-death.jpg" />
         </div>
 
+        <div class="center">
+            <h2 id="rank-text"></h2>
+            <table id="score-table">
+                <!-- <thead>
+                    <tr>
+                        <th></th>
+                        <th>Naam</th>
+                        <th>Score</th>
+                    </tr>
+                </thead> -->
+                <tbody id="score-table-body"></tbody>
+            </table>
+        </div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.core.min.js"></script>
+
+        <script>
+            const params = new URLSearchParams(location.search);
+            const name = params.get("name") || "guest";
+            const roomId = params.get("roomId") || "default";
+            const redirect = params.has("redirect") ? decodeURIComponent(params.get("redirect")) : "/screen/index.html";
+
+            console.log({ name, roomId, redirect });
+
+            let gameOver = false;
+
+            let gameInstance;
+            document.addEventListener("DOMContentLoaded", () => {
+                subscribeRoom(roomId);
+
+                console.log("Starting new game");
+
+                globalThis.onGameOver = (score) => {
+                    gameOver = true;
+                    console.log("Game over!", score);
+                    publishScore(name, score).then(() => {
+                        updateScoreTable(name);
+                        updateRankText(name);
+                    });
+                };
+
+                updateScoreTable(name);
+                updateRankText(name);
+            });
+
+            function returnHome() {
+                location.href = redirect;
+            }
+
+            let noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
+
+            window.addEventListener("pubnub", (ev) => {
+                console.log("Received pubnub event", ev);
+
+                let message = ev.detail.message;
+                if (message.name !== name) {
+                    // Only listen to messages from the current player
+                    return;
+                }
+
+                clearInterval(noActivityTimer);
+                noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);
+
+                if (gameOver) {
+                    // Refresh page
+                    location.href = location.href;
+                    return;
+                }
+
+                if (message.type === "jumpDown") {
+                    // Simulate jump button event
+                    document.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            keyCode: 32,
+                            key: " ",
+                            detail: 0,
+                        })
+                    );
+                } else if (message.type === "jumpUp") {
+                    // Simulate jump button event
+                    document.dispatchEvent(
+                        new KeyboardEvent("keyup", {
+                            keyCode: 32,
+                            key: " ",
+                            detail: 0,
+                        })
+                    );
+                } else if (message.type === "leftDown") {
+                    // Simulate duck button event
+                    document.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            keyCode: 37,
+                            detail: 0,
+                        })
+                    );
+                } else if (message.type === "leftUp") {
+                    // Simulate duck button event
+                    document.dispatchEvent(
+                        new KeyboardEvent("keyup", {
+                            keyCode: 37,
+                            detail: 0,
+                        })
+                    );
+                } else if (message.type === "rightDown") {
+                    // Simulate duck button event
+                    document.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            keyCode: 39,
+                            detail: 0,
+                        })
+                    );
+                } else if (message.type === "rightUp") {
+                    // Simulate duck button event
+                    document.dispatchEvent(
+                        new KeyboardEvent("keyup", {
+                            keyCode: 39,
+                            detail: 0,
+                        })
+                    );
+                }
+            });
+        </script>
     </body>
 </html>

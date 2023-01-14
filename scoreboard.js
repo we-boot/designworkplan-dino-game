@@ -130,3 +130,40 @@ async function publishScore(name, score) {
         return res.ok;
     }
 }
+
+async function updateScoreTable(markName, elementId = "score-table-body") {
+    let tbody = document.getElementById(elementId);
+
+    let scores = await getScores();
+
+    while (tbody.firstChild) {
+        tbody.firstChild.remove();
+    }
+
+    for (let i = 0; i < scores.length; i++) {
+        let score = scores[i];
+
+        let rowElement = document.createElement("tr");
+
+        if (score.fields.name === markName) {
+            rowElement.style.backgroundColor = "#0001";
+        }
+
+        let rankElement = document.createElement("td");
+        rankElement.innerText = i + 1;
+        rowElement.appendChild(rankElement);
+        let nameElement = document.createElement("td");
+        nameElement.innerText = score.fields.name;
+        rowElement.appendChild(nameElement);
+        let scoreElement = document.createElement("td");
+        scoreElement.innerText = score.fields.score;
+        rowElement.appendChild(scoreElement);
+        tbody.appendChild(rowElement);
+    }
+}
+
+async function updateRankText(name) {
+    let rank = await getRank(name);
+    let rankElement = document.getElementById("rank-text");
+    rankElement.innerText = rank === 0 ? "" : `Je staat ${rank}e!`;
+}
