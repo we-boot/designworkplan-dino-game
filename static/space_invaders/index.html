@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Space Invaders</title>
+        <script src="./space_invaders/bundle.js"></script>
+        <link rel="stylesheet" type="text/css" href="./space_invaders/css/index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div id="container">
+            <div class="hide" id="menu-button">Menu</div>
+            <canvas id="game-canvas"></canvas>
+
+            <div id="menu-container" class="hide menu-container">
+                <div class="header">SPACE INVADERS</div>
+                <div id="about-button" class="hide button">About</div>
+                <div id="instructions-button" class="hide button">Instructions</div>
+                <div id="resume-button" class="hide button">Resume</div>
+                <div id="restart-button" class="hide button">Restart</div>
+            </div>
+
+            <div id="about" class="hide">
+                <div id="close-about" class="hide">close[x]</div>
+                <p>
+                    This is a remake of the classic arcade game, Space Invaders.
+                    <br />
+                    Made by <a id="port-link" href="http://www.jayhwang.xyz">Jay Hwang</a>
+                </p>
+            </div>
+
+            <div id="instructions" class="hide">
+                <div id="close-instructions" class="hide">close[x]</div>
+                <p>
+                    Press space to shoot, and use the arrow keys to move.
+
+                    <br />
+
+                    Every once in a while, a mystery ufo will spawn. If you manage to kill it, it may drop items that upgrade your ship. Be sure to
+                    pick these up quickly because they will disappear!
+                </p>
+
+                <p />
+            </div>
+
+            <div id="invader-info" class="show">
+                <p>= 10 points</p>
+                <p>= 20 points</p>
+                <p>= 40 points</p>
+                <p>= ??? points</p>
+            </div>
+
+            <div id="splash-instruction" class="show">
+                <p>SPACE TO SHOOT</p>
+                <p>ARROW KEYS TO MOVE</p>
+            </div>
+
+            <div id="play-game">
+                <p>CLICK TO START</p>
+            </div>
+
+            <!-- Sprite images -->
+
+            <img id="audio" src="./space_invaders/images/audio.jpg" />
+
+            <img class="hide" id="mute" src="./space_invaders/images/mute.jpg" />
+
+            <img class="hide" id="game-over" src="./space_invaders/images/game-over.jpg" />
+
+            <img id="main-logo" src="./space_invaders/images/main-logo.jpg" />
+
+            <!-- <img
+        id="play-game"
+        src="./space_invaders/images/play-game.jpg" /> -->
+
+            <img class="hide" id="defender" src="./space_invaders/images/defender.jpg" />
+
+            <img class="hide" id="defender-death" src="./space_invaders/images/defender-death.jpg" />
+
+            <img class="" id="grunt-1" src="./space_invaders/images/grunt-1.jpg" />
+
+            <img class="hide" id="grunt-2" src="./space_invaders/images/grunt-2.jpg" />
+
+            <img class="" id="soldier-1" src="./space_invaders/images/soldier-1.jpg" />
+
+            <img class="hide" id="soldier-2" src="./space_invaders/images/soldier-2.jpg" />
+
+            <img class="" id="invader-1" src="./space_invaders/images/invader-1.jpg" />
+
+            <img class="hide" id="invader-2" src="./space_invaders/images/invader-2.jpg" />
+
+            <img class="" id="ufo" src="./space_invaders/images/ufo.jpg" />
+
+            <img class="hide" id="lives" src="./space_invaders/images/lives.jpg" />
+
+            <img class="hide" id="ship-death" src="./space_invaders/images/ship-death.jpg" />
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.core.min.js"></script>
+    </body>
+</html>

@@ -23,3 +23,8 @@ The controller url is `<WEBSITE_ROOT>`.
 Some information is fetched from AirTable. To edit this information, go to the following link:
 
 [https://airtable.com/appHzqhkCtvCp6RR7/tblu073RHDj4Tldbv/viw67TD4mGUvqRIcz](https://airtable.com/appHzqhkCtvCp6RR7/tblu073RHDj4Tldbv/viw67TD4mGUvqRIcz)
+
+## Credits
+
+- Dino Game: https://github.com/wayou/t-rex-runner
+- Space Invaders: https://github.com/jay-ithiel/space_invaders
