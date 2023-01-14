@@ -845,7 +845,7 @@
                 let deathSound;
 
                 if (this.name === "defender") {
-                    if (!this.game.gameView.isMuted) deathSound = "./space_invaders/sounds/defender_death.mp3";
+                    if (!this.game.gameView.isMuted) deathSound = "../../static/space_invaders/sounds/defender_death.mp3";
                     this.respawn();
                 } else {
                     this.game.score += this.killScore();
@@ -865,9 +865,9 @@
 
                     if (!this.game.gameView.isMuted) {
                         if (this.name === "ufo") {
-                            deathSound = "./space_invaders/sounds/ufo_death.wav";
+                            deathSound = "../../static/space_invaders/sounds/ufo_death.wav";
                         } else {
-                            deathSound = "./space_invaders/sounds/grunt_death.wav";
+                            deathSound = "../../static/space_invaders/sounds/grunt_death.wav";
                         }
                     }
                 }
@@ -1067,11 +1067,11 @@
                 if (!this.game.gameView.isMuted) {
                     let shootSound = "";
                     if (this.name === "defender") {
-                        shootSound = "./space_invaders/sounds/defender_gun2.wav";
+                        shootSound = "../../static/space_invaders/sounds/defender_gun2.wav";
                     } else if (this.name === "ufo") {
-                        shootSound = "./space_invaders/sounds/ufo_gun.wav";
+                        shootSound = "../../static/space_invaders/sounds/ufo_gun.wav";
                     } else {
-                        shootSound = "./space_invaders/sounds/defender_gun.wav";
+                        shootSound = "../../static/space_invaders/sounds/defender_gun.wav";
                     }
 
                     var sound = new Howl({
