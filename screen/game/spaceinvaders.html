@@ -136,16 +136,16 @@
 
                 globalThis.onGameOver = (score) => {
                     console.log("Game over!", score);
-                    publishScore(name, score).then(() => {
-                        updateScoreTable(name);
-                        updateRankText(name);
+                    publishScore("spaceinvaders", name, score).then(() => {
+                        updateScoreTable("spaceinvaders", name);
+                        updateRankText("spaceinvaders", name);
                     });
 
                     setTimeout(() => (gameOver = true), 3000);
                 };
 
-                updateScoreTable(name);
-                updateRankText(name);
+                updateScoreTable("spaceinvaders", name);
+                updateRankText("spaceinvaders", name);
             });
 
             function returnHome() {

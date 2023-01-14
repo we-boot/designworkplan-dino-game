@@ -34,9 +34,11 @@ async function getCards() {
     }
 }
 
-async function getScores(maxRecords = 100) {
+async function getScores(game, maxRecords = 100) {
     let res = await fetch(
-        "https://api.airtable.com/v0/appHzqhkCtvCp6RR7/DinoGame?sort[0][field]=score&sort[0][direction]=desc&maxRecords=" + maxRecords,
+        `https://api.airtable.com/v0/appHzqhkCtvCp6RR7/DinoGame?filterByFormula=${encodeURIComponent(
+            `{game}='${game}'`
+        )}&sort[0][field]=score&sort[0][direction]=desc&maxRecords=${encodeURIComponent(String(maxRecords))}`,
         {
             method: "GET",
             headers: {
@@ -54,14 +56,16 @@ async function getScores(maxRecords = 100) {
     }
 }
 
-async function getRank(name) {
-    let scores = await getScores();
+async function getRank(game, name) {
+    let scores = await getScores(game);
     return scores.findIndex((e) => e.fields.name === name) + 1;
 }
 
-async function getScore(name) {
+async function getScore(game, name) {
     let res = await fetch(
-        `https://api.airtable.com/v0/appHzqhkCtvCp6RR7/DinoGame?filterByFormula=${encodeURIComponent(`{name}='${name}'`)}&maxRecords=1`,
+        `https://api.airtable.com/v0/appHzqhkCtvCp6RR7/DinoGame?filterByFormula=${encodeURIComponent(
+            `AND({name}='${name}',{game}='${game}')`
+        )}&maxRecords=1`,
         {
             method: "GET",
             headers: {
@@ -78,8 +82,8 @@ async function getScore(name) {
     }
 }
 
-async function publishScore(name, score) {
-    let existingScore = await getScore(name);
+async function publishScore(game, name, score) {
+    let existingScore = await getScore(game, name);
     if (existingScore) {
         if (existingScore.fields.score >= score) {
             // Score didn't improve
@@ -118,6 +122,7 @@ async function publishScore(name, score) {
                 records: [
                     {
                         fields: {
+                            game: game,
                             name: name,
                             score: score,
                             version: 1,
@@ -131,10 +136,10 @@ async function publishScore(name, score) {
     }
 }
 
-async function updateScoreTable(markName, elementId = "score-table-body") {
+async function updateScoreTable(game, markName, elementId = "score-table-body") {
     let tbody = document.getElementById(elementId);
 
-    let scores = await getScores();
+    let scores = await getScores(game);
 
     while (tbody.firstChild) {
         tbody.firstChild.remove();
@@ -162,8 +167,8 @@ async function updateScoreTable(markName, elementId = "score-table-body") {
     }
 }
 
-async function updateRankText(name) {
-    let rank = await getRank(name);
+async function updateRankText(game, name) {
+    let rank = await getRank(game, name);
     let rankElement = document.getElementById("rank-text");
     rankElement.innerText = rank === 0 ? "" : `Je staat ${rank}e!`;
 }

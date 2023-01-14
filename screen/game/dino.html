@@ -83,14 +83,14 @@
             gameInstance = new Runner(".interstitial-wrapper");
             gameInstance.onGameOver = () => {
                 console.log("Game over!");
-                publishScore(name, Math.round(gameInstance.distanceRan * 0.025)).then(() => {
-                    updateScoreTable(name);
-                    updateRankText(name);
+                publishScore("dino", name, Math.round(gameInstance.distanceRan * 0.025)).then(() => {
+                    updateScoreTable("dino", name);
+                    updateRankText("dino", name);
                 });
             };
 
-            updateScoreTable(name);
-            updateRankText(name);
+            updateScoreTable("dino", name);
+            updateRankText("dino", name);
         });
 
         function returnHome() {
