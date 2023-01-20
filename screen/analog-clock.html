@@ -1,0 +1,31 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Analog Clock</title>
+        <link rel="stylesheet" href="../index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+
+        <script src="../connection.js"></script>
+        <script src="../scenes.js"></script>
+        <script src="../sequence.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+        <script src="../static/d3clock.js"></script>
+    </head>
+
+    <body>
+        <div id="chart1" class="center"></div>
+
+        <script>
+            d3clock({
+                target: "#chart1",
+                face: "sbb",
+                width: 500,
+                TZOffset: {
+                    hours: 0,
+                },
+            });
+        </script>
+    </body>
+</html>

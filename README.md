@@ -28,3 +28,4 @@ Some information is fetched from AirTable. To edit this information, go to the f
 
 - Dino Game: https://github.com/wayou/t-rex-runner
 - Space Invaders: https://github.com/jay-ithiel/space_invaders
+- Analog Clock: https://github.com/danielpradilla/d3clock
