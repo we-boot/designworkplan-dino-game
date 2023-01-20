@@ -21,6 +21,7 @@
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
         <script src="../background.js"></script>
+        <script src="../sequence.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
@@ -29,7 +30,7 @@
         <div class="center">
             <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
                 <label for="title-input">Sign title</label>
-                <input name="title" id="title-input" type="text" />
+                <input name="text" id="title-input" type="text" />
                 <label for="rotation-input">Direction</label>
                 <select id="rotation-input" name="rotation">
                     <option value="0">Left</option>
@@ -75,9 +76,9 @@
             subscribeRoom(randomRoomId);
             loadParticles();
 
-            if (params.has("title")) {
+            if (params.has("text")) {
                 let signRotation = params.has("rotation") ? parseInt(params.get("rotation")) : 0;
-                let signTitle = params.has("title") ? params.get("title") : "Follow";
+                let signTitle = params.has("text") ? params.get("text") : "Follow";
                 let signTitleElement = document.getElementById("sign-title");
                 signTitleElement.innerText = signTitle;
 

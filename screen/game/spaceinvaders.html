@@ -125,7 +125,7 @@
             const params = new URLSearchParams(location.search);
             const name = params.get("name") || "guest";
             const roomId = params.get("roomId") || "default";
-            const redirect = params.has("redirect") ? decodeURIComponent(params.get("redirect")) : "/screen/index.html";
+            const redirect = params.has("redirect") ? params.get("redirect") : "/screen/index.html";
 
             console.log({ name, roomId, redirect });
 
