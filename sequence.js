@@ -27,7 +27,7 @@ function getPathForSceneType(sceneType) {
 
 function gotoScene(scenes, index) {
     let scene = scenes[index];
-    let url = getPathForSceneType(scene.type);
+    let url = WEBSITE_ROOT + getPathForSceneType(scene.type);
 
     let params = new URLSearchParams();
     for (let k in scene) {
