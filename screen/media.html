@@ -30,8 +30,8 @@
         <div class="center">
             <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
                 <label for="src-input">Image URL or YouTube video ID</label>
-                <input name="src" id="src-input" type="text" />
-                <select name="type">
+                <input name="url" id="src-input" type="text" />
+                <select name="urlType">
                     <option value="image">Image</option>
                     <option value="youtube">YouTube video</option>
                 </select>
@@ -71,17 +71,17 @@
             subscribeRoom(randomRoomId);
             loadParticles();
 
-            let type = params.get("type");
+            let type = params.get("urlType");
             let imageElement = document.getElementById("image-media");
             let videoElement = document.getElementById("video-media");
 
             if (type === "image") {
-                imageElement.src = params.get("src");
+                imageElement.src = params.get("url");
                 videoElement.remove();
             } else if (type === "youtube") {
                 videoElement.width = params.has("width") ? parseInt(params.get("width")) : window.innerWidth * 0.75;
                 videoElement.height = params.has("height") ? parseInt(params.get("height")) : window.innerHeight * 0.75;
-                videoElement.src = "https://www.youtube.com/embed/" + params.get("src");
+                videoElement.src = "https://www.youtube.com/embed/" + params.get("url");
                 imageElement.remove();
             }
 

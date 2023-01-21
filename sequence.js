@@ -62,7 +62,7 @@ function runSequence() {
 
     let sceneIndex = parseInt(params.get("seqi"));
     let currentScene = scenes[sceneIndex];
-    let repeat = true;
+    let repeat = params.has("seqr") ? params.get("seqr") === "true" : true;
 
     let nextIndex = sceneIndex + 1;
     if (nextIndex >= scenes.length) {
