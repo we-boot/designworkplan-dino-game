@@ -19,8 +19,8 @@ tr {
     padding: 0.2em 0.5em;
 }
 
-#sign-title {
-    max-width: 50%;
+.sign-title {
+    max-width: 50vw;
     text-align: center;
     color: white;
     font-size: 5em;
@@ -57,6 +57,7 @@ body,
 html {
     font-family: sans-serif;
     height: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -154,4 +155,23 @@ body {
 
 #score-table-body tr:first-child {
     color: gold;
+}
+
+.center-spread {
+    display: flex;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.center-spread > div {
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-spread > div:nth-of-type(2) {
+    margin-left: auto;
+    align-self: flex-end;
 }
