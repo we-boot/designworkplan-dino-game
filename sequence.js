@@ -64,23 +64,27 @@ function runSequence() {
     let currentScene = scenes[sceneIndex];
     let repeat = true;
 
-    if (currentScene.type !== "countdown") {
-        let nextIndex = sceneIndex + 1;
-        if (nextIndex >= scenes.length) {
-            if (repeat) {
-                nextIndex = 0;
-                console.log("Reached end of sequence, repeating");
-            } else {
-                console.log("Reached end of sequence, not repeating because it is disabled");
-                return;
-            }
+    let nextIndex = sceneIndex + 1;
+    if (nextIndex >= scenes.length) {
+        if (repeat) {
+            nextIndex = 0;
+            console.log("Reached end of sequence, repeating");
+        } else {
+            console.log("Reached end of sequence, not repeating because it is disabled");
+            return;
         }
-
-        console.log("Transitioning to scene %d in %d seconds", nextIndex, currentScene.duration);
-        setTimeout(() => gotoScene(scenes, nextIndex), currentScene.duration * 1000);
-    } else {
-        console.warn("Countdown does not transition automatically");
     }
+
+    let delay = currentScene.duration * 1000;
+    if (currentScene.type === "countdown") {
+        let diffMs = new Date(currentScene.to).getTime() - new Date().getTime();
+        if (diffMs > 0) {
+            delay += diffMs;
+        }
+    }
+
+    console.log("Transitioning to scene %d in %d seconds", nextIndex, delay / 1000);
+    setTimeout(() => gotoScene(scenes, nextIndex), delay);
 }
 
 runSequence();

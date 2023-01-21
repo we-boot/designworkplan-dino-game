@@ -19,6 +19,22 @@ tr {
     padding: 0.2em 0.5em;
 }
 
+#countdown-title {
+    max-width: 50vw;
+    text-align: center;
+    color: white;
+    font-size: 4em;
+    font-weight: bold;
+}
+
+#countdown-time {
+    text-align: center;
+    color: white;
+    font-size: 8em;
+    font-weight: bold;
+    font-family: monospace;
+}
+
 .sign-title {
     max-width: 50vw;
     text-align: center;
