@@ -25,7 +25,7 @@ function getPathForSceneType(sceneType) {
     }
 }
 
-function gotoScene(scenes, index) {
+function gotoScene(scenes, index, repeat) {
     let scene = scenes[index];
     let url = WEBSITE_ROOT + getPathForSceneType(scene.type);
 
@@ -40,6 +40,7 @@ function gotoScene(scenes, index) {
 
     params.set("seq", JSON.stringify(scenes));
     params.set("seqi", index);
+    params.set("seqr", String(repeat));
 
     location.href = url + "?" + params.toString();
 }
@@ -53,16 +54,16 @@ function runSequence() {
 
     let seq = params.get("seq");
     let scenes = JSON.parse(seq);
+    let repeat = params.has("seqr") ? params.get("seqr") === "true" : true;
 
     if (!params.has("seqi")) {
         // Goto first scene
-        gotoScene(scenes, 0);
+        gotoScene(scenes, 0, repeat);
         return;
     }
 
     let sceneIndex = parseInt(params.get("seqi"));
     let currentScene = scenes[sceneIndex];
-    let repeat = params.has("seqr") ? params.get("seqr") === "true" : true;
 
     let nextIndex = sceneIndex + 1;
     if (nextIndex >= scenes.length) {
@@ -84,7 +85,7 @@ function runSequence() {
     }
 
     console.log("Transitioning to scene %d in %d seconds", nextIndex, delay / 1000);
-    setTimeout(() => gotoScene(scenes, nextIndex), delay);
+    setTimeout(() => gotoScene(scenes, nextIndex, repeat), delay);
 }
 
 runSequence();
