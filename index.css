@@ -30,9 +30,8 @@ tr {
 #countdown-time {
     text-align: center;
     color: white;
-    font-size: 8em;
+    font-size: 10em;
     font-weight: bold;
-    font-family: monospace;
 }
 
 .sign-title {

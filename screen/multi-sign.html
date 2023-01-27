@@ -106,19 +106,27 @@
             loadParticles();
 
             if (params.has("rightText") || params.has("leftText")) {
-                let leftSignRotation = params.has("leftRotation") ? parseInt(params.get("leftRotation")) : 0;
+                let leftSignRotation = parseInt(params.get("leftRotation"));
                 let leftSignTitle = params.has("leftText") ? params.get("leftText") : "Follow";
                 let leftSignTitleElement = document.getElementById("sign-left-title");
                 leftSignTitleElement.innerText = leftSignTitle;
                 let leftSignElement = document.getElementById("sign-left-icon");
-                leftSignElement.style.transform = `rotate(${leftSignRotation}deg)`;
+                if (!isNaN(leftSignRotation)) {
+                    leftSignElement.style.transform = `rotate(${leftSignRotation}deg)`;
+                } else {
+                    leftSignElement.style.display = "none";
+                }
 
-                let rightSignRotation = params.has("rightRotation") ? parseInt(params.get("rightRotation")) : 0;
+                let rightSignRotation = parseInt(params.get("rightRotation"));
                 let rightSignTitle = params.has("rightText") ? params.get("rightText") : "Follow";
                 let rightSignTitleElement = document.getElementById("sign-right-title");
                 rightSignTitleElement.innerText = rightSignTitle;
                 let rightSignElement = document.getElementById("sign-right-icon");
-                rightSignElement.style.transform = `rotate(${rightSignRotation}deg)`;
+                if (!isNaN(rightSignRotation)) {
+                    rightSignElement.style.transform = `rotate(${rightSignRotation}deg)`;
+                } else {
+                    rightSignElement.style.display = "none";
+                }
 
                 document.getElementById("setup-form").remove();
             }

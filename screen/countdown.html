@@ -81,14 +81,16 @@
                 let toDate = params.get("to");
                 let text = params.get("text");
                 let arrowText = params.get("arrowText");
-                let arrowRotation = params.get("arrowRotation");
+                let arrowRotation = parseInt(params.get("arrowRotation"));
                 let arrowDuration = params.get("arrowDuration");
 
                 let signTitleElement = document.getElementById("sign-title");
                 signTitleElement.innerText = arrowText;
                 signTitleElement.style.display = "none";
                 let signElement = document.getElementById("sign-icon");
-                signElement.style.transform = `rotate(${arrowRotation}deg)`;
+                if (!isNaN(arrowRotation)) {
+                    signElement.style.transform = `rotate(${arrowRotation}deg)`;
+                }
                 signElement.style.display = "none";
 
                 let countDownTitleElement = document.getElementById("countdown-title");
@@ -109,7 +111,9 @@
                         countDownTitleElement.style.display = "none";
                         countDownTimeElement.style.display = "none";
                         signTitleElement.style.display = "block";
-                        signElement.style.display = "block";
+                        if (!isNaN(arrowRotation)) {
+                            signElement.style.display = "block";
+                        }
                         return;
                     }
 

@@ -20,6 +20,8 @@ function getPathForSceneType(sceneType) {
             return "/screen/cards";
         case "media":
             return "/screen/media";
+        case "text":
+            return "/screen/sign";
         default:
             throw new Error("Unknown scene type " + sceneType);
     }
@@ -35,7 +37,6 @@ function gotoScene(scenes, index, repeat) {
     }
 
     // These are gathered from path/current scene
-    params.delete("type");
     params.delete("duration");
 
     params.set("seq", JSON.stringify(scenes));

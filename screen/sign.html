@@ -77,13 +77,19 @@
             loadParticles();
 
             if (params.has("text")) {
-                let signRotation = params.has("rotation") ? parseInt(params.get("rotation")) : 0;
-                let signTitle = params.has("text") ? params.get("text") : "Follow";
+                let signRotation = parseInt(params.get("rotation"));
+                let signTitle = params.has("text") ? params.get("text") : "Text here";
                 let signTitleElement = document.getElementById("sign-title");
                 signTitleElement.innerText = signTitle;
 
+                console.log("signRotation", signRotation);
+
                 let signElement = document.getElementById("sign-icon");
-                signElement.style.transform = `rotate(${signRotation}deg)`;
+                if (!isNaN(signRotation)) {
+                    signElement.style.transform = `rotate(${signRotation}deg)`;
+                } else {
+                    signElement.style.display = "none";
+                }
 
                 document.getElementById("setup-form").remove();
             }
