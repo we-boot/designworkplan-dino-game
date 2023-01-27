@@ -59,7 +59,7 @@ function runSequence() {
         return;
     }
 
-    let roomId = params.has("roomId") ? params.get("roomId") : null;
+    let roomId = params.has("roomId") ? params.get("roomId") : "default";
     let sequenceString = params.get("seq");
     let sequence = JSON.parse(sequenceString);
     let repeatSequence = params.has("seqr") ? params.get("seqr") === "true" : true;
@@ -95,14 +95,18 @@ function runSequence() {
         }
     }
 
-    console.log("Transitioning to scene %d in %d seconds", nextIndex, delay / 1000);
-    sceneTransitionHandle = setTimeout(() => (location.href = nextSceneUrl), delay);
+    setTransitionDelay(delay);
 }
 
-function cancelSequenceTransition() {
+function setTransitionDelay(delay) {
     if (sceneTransitionHandle) {
         clearTimeout(sceneTransitionHandle);
         sceneTransitionHandle = null;
+    }
+
+    if (delay !== null) {
+        console.log("Transitioning to next scene in %d seconds", delay / 1000);
+        sceneTransitionHandle = setTimeout(() => (location.href = nextSceneUrl), delay);
     }
 }
 

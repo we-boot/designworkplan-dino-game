@@ -23,11 +23,11 @@ function subscribeRoom(roomId) {
     });
 }
 
-let roomId = new URLSearchParams(location.search).get("roomId") || window.crypto.randomUUID().slice(0, 8);
+let roomId = new URLSearchParams(location.search).get("roomId") || "default"; // || window.crypto.randomUUID().slice(0, 8);
 console.log("Room id", roomId);
 
 window.addEventListener("pubnub", (ev) => {
-    console.log("Received pubnub event", ev);
+    // console.log("Received pubnub event", ev);
 
     let afterGameUrl = getNextSceneUrl() || location.href;
 
@@ -35,9 +35,14 @@ window.addEventListener("pubnub", (ev) => {
     if (message.type === "connected") {
         location.href =
             WEBSITE_ROOT +
-            `/screen/game/${game}?redirect=${encodeURIComponent(afterGameUrl)}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(
+            `/screen/game/${message.game}?redirect=${encodeURIComponent(afterGameUrl)}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(
                 message.name
             )}`;
+    } else if (message.type === "pause-sequence") {
+        console.log("Received pause-sequence");
+        setTransitionDelay(30000);
+    } else {
+        console.warn("Received unknown pubnub message", message);
     }
 });
 

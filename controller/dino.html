@@ -121,6 +121,13 @@
                 });
             }
 
+            pubnub.publish({
+                channel: "game-" + roomId,
+                message: {
+                    type: "pause-sequence",
+                },
+            });
+
             let name = prompt("Please enter your name:");
             if (!name || name.length < 2) {
                 name = "Guest " + Math.floor(Math.random() * 9000 + 1000);
@@ -136,6 +143,7 @@
                     channel: "game-" + roomId,
                     message: {
                         type: "connected",
+                        game: "dino",
                         name: name,
                     },
                 });
