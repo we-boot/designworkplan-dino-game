@@ -34,7 +34,7 @@ async function getCards() {
     }
 }
 
-async function getScores(game, maxRecords = 100) {
+async function getScores(game, maxRecords = 7) {
     let res = await fetch(
         `https://api.airtable.com/v0/appHzqhkCtvCp6RR7/DinoGame?filterByFormula=${encodeURIComponent(
             `{game}='${game}'`
@@ -57,8 +57,12 @@ async function getScores(game, maxRecords = 100) {
 }
 
 async function getRank(game, name) {
-    let scores = await getScores(game);
-    return scores.findIndex((e) => e.fields.name === name) + 1;
+    let scores = await getScores(game, 100);
+    let idx = scores.findIndex((e) => e.fields.name === name);
+    if (idx === -1) {
+        return 100;
+    }
+    return idx + 1;
 }
 
 async function getScore(game, name) {
