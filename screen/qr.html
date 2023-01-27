@@ -9,11 +9,12 @@
         <link rel="stylesheet" href="../index.css" />
         <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../index.js"></script>
+        <script src="../sequence.js"></script>
         <script src="../connection.js"></script>
         <script src="../scoreboard.js"></script>
         <script src="../scenes.js"></script>
         <script src="../static/qrcode.min.js"></script>
-        <script src="../sequence.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
@@ -34,31 +35,11 @@
 
         let game = params.get("game") || "dino";
 
-        let roomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
-        console.log("Room id", roomId);
-
         let qrContent = WEBSITE_ROOT + `/controller/${game}?roomId=${encodeURIComponent(roomId)}&game=${encodeURIComponent(game)}`;
         console.log("qrContent", qrContent);
         let qrCode = new QRCode(document.getElementById("qr-code"), {
             text: qrContent,
             correctLevel: QRCode.CorrectLevel.H,
-        });
-
-        window.addEventListener("pubnub", (ev) => {
-            console.log("Received pubnub event", ev);
-
-            let message = ev.detail.message;
-            if (message.type === "connected") {
-                location.href =
-                    WEBSITE_ROOT +
-                    `/screen/game/${game}?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(
-                        roomId
-                    )}&name=${encodeURIComponent(message.name)}`;
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            subscribeRoom(roomId);
         });
     </script>
 </html>

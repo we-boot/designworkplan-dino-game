@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="../index.css" />
         <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../index.js"></script>
+        <script src="../sequence.js"></script>
         <script src="../connection.js"></script>
         <script src="../weather.js"></script>
         <script src="../scoreboard.js"></script>
@@ -24,7 +26,6 @@
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
         <script src="../background.js"></script>
-        <script src="../sequence.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
@@ -48,24 +49,6 @@
 
     <script>
         const params = new URLSearchParams(location.search);
-
-        let randomRoomId = params.get("roomId") || window.crypto.randomUUID().slice(0, 8);
-        console.log("Room id", randomRoomId);
-
-        let qrCode = new QRCode(document.getElementById("qr-code"), WEBSITE_ROOT + "/?roomId=" + encodeURIComponent(randomRoomId));
-
-        window.addEventListener("pubnub", (ev) => {
-            console.log("Received pubnub event", ev);
-
-            let message = ev.detail.message;
-            if (message.type === "connected") {
-                location.href =
-                    WEBSITE_ROOT +
-                    `/screen/game.html?redirect=${encodeURIComponent(location.href)}&roomId=${encodeURIComponent(
-                        randomRoomId
-                    )}&name=${encodeURIComponent(message.name)}`;
-            }
-        });
 
         function refreshTime() {
             let now = new Date();
@@ -99,7 +82,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             refreshTime();
             setInterval(refreshTime, 1000);
-            subscribeRoom(randomRoomId);
             loadParticles();
 
             hourlyRefresh();

@@ -1,6 +1,3 @@
-const WEBSITE_ROOT = location.hostname === "localhost" ? "http://localhost:3000" : "https://we-boot.github.io/designworkplan-dino-game";
-const NO_ACTIVITY_TIME = 1000 * 60;
-
 let pubnub = new PubNub({
     publishKey: "pub-c-11a13158-acff-4307-85c9-aa2948d65e7c",
     subscribeKey: "sub-c-87a3e456-cbb2-11ec-ba93-a6fdca316470",
@@ -25,3 +22,25 @@ function subscribeRoom(roomId) {
         channels: ["game-" + roomId],
     });
 }
+
+let roomId = new URLSearchParams(location.search).get("roomId") || window.crypto.randomUUID().slice(0, 8);
+console.log("Room id", roomId);
+
+window.addEventListener("pubnub", (ev) => {
+    console.log("Received pubnub event", ev);
+
+    let afterGameUrl = getNextSceneUrl() || location.href;
+
+    let message = ev.detail.message;
+    if (message.type === "connected") {
+        location.href =
+            WEBSITE_ROOT +
+            `/screen/game/${game}?redirect=${encodeURIComponent(afterGameUrl)}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(
+                message.name
+            )}`;
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    subscribeRoom(roomId);
+});

@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="../../static/dino/game.css" />
         <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../../index.js"></script>
         <script src="../../static/dino/game.js"></script>
         <script src="../../connection.js"></script>
         <script src="../../scoreboard.js"></script>
@@ -61,7 +62,6 @@
     <script>
         const params = new URLSearchParams(location.search);
         const name = params.get("name") || "guest";
-        const roomId = params.get("roomId") || "default";
         const redirect = params.has("redirect") ? params.get("redirect") : "/screen/index.html";
 
         console.log({ name, roomId, redirect });

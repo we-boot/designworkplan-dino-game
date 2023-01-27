@@ -27,8 +27,8 @@ function getPathForSceneType(sceneType) {
     }
 }
 
-function gotoScene(scenes, index, repeat) {
-    let scene = scenes[index];
+function getSceneUrl(sequence, index, repeat, roomId = null) {
+    let scene = sequence[index];
     let url = WEBSITE_ROOT + getPathForSceneType(scene.type);
 
     let params = new URLSearchParams();
@@ -39,12 +39,18 @@ function gotoScene(scenes, index, repeat) {
     // These are gathered from path/current scene
     params.delete("duration");
 
-    params.set("seq", JSON.stringify(scenes));
+    params.set("seq", JSON.stringify(sequence));
     params.set("seqi", index);
     params.set("seqr", String(repeat));
+    if (roomId !== null) {
+        params.set("roomId", roomId);
+    }
 
-    location.href = url + "?" + params.toString();
+    return url + "?" + params.toString();
 }
+
+let nextSceneUrl = null;
+let sceneTransitionHandle = null;
 
 function runSequence() {
     let params = new URLSearchParams(location.search);
@@ -53,22 +59,23 @@ function runSequence() {
         return;
     }
 
-    let seq = params.get("seq");
-    let scenes = JSON.parse(seq);
-    let repeat = params.has("seqr") ? params.get("seqr") === "true" : true;
+    let roomId = params.has("roomId") ? params.get("roomId") : null;
+    let sequenceString = params.get("seq");
+    let sequence = JSON.parse(sequenceString);
+    let repeatSequence = params.has("seqr") ? params.get("seqr") === "true" : true;
 
     if (!params.has("seqi")) {
         // Goto first scene
-        gotoScene(scenes, 0, repeat);
+        location.href = getSceneUrl(sequence, 0, repeatSequence, roomId);
         return;
     }
 
-    let sceneIndex = parseInt(params.get("seqi"));
-    let currentScene = scenes[sceneIndex];
+    let sequenceIndex = parseInt(params.get("seqi"));
+    let currentScene = sequence[sequenceIndex];
 
-    let nextIndex = sceneIndex + 1;
-    if (nextIndex >= scenes.length) {
-        if (repeat) {
+    let nextIndex = sequenceIndex + 1;
+    if (nextIndex >= sequence.length) {
+        if (repeatSequence) {
             nextIndex = 0;
             console.log("Reached end of sequence, repeating");
         } else {
@@ -76,6 +83,9 @@ function runSequence() {
             return;
         }
     }
+
+    nextSceneUrl = getSceneUrl(sequence, nextIndex, repeatSequence, roomId);
+    console.log("Next scene", nextSceneUrl);
 
     let delay = currentScene.duration * 1000;
     if (currentScene.type === "countdown") {
@@ -86,7 +96,18 @@ function runSequence() {
     }
 
     console.log("Transitioning to scene %d in %d seconds", nextIndex, delay / 1000);
-    setTimeout(() => gotoScene(scenes, nextIndex, repeat), delay);
+    sceneTransitionHandle = setTimeout(() => (location.href = nextSceneUrl), delay);
+}
+
+function cancelSequenceTransition() {
+    if (sceneTransitionHandle) {
+        clearTimeout(sceneTransitionHandle);
+        sceneTransitionHandle = null;
+    }
+}
+
+function getNextSceneUrl() {
+    return nextSceneUrl;
 }
 
 runSequence();
