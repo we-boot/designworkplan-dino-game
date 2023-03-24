@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>designworkplan dino game</title>
+        <link rel="stylesheet" href="../index.css" />
+        <link rel="stylesheet" href="../directory.css" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../index.js"></script>
+        <script src="../connection.js"></script>
+        <script src="../weather.js"></script>
+        <script src="../scenes.js"></script>
+        <script src="../static/qrcode.min.js"></script>
+        <script src="../static/moment.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-shape-circle@2.0.5/tsparticles.shape.circle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-color@2.0.5/tsparticles.updater.color.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-opacity@2.0.5/tsparticles.updater.opacity.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
+        <script src="../background.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
+    </head>
+    <body class="gray-background">
+        <div id="table-grid">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bestemming</th>
+                            <th>Afdeling</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bestemming naam</td>
+                            <td>Polikliniek</td>
+                            <td>D1</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming met naam</td>
+                            <td>Verpleegafdeling</td>
+                            <td>A5</td>
+                        </tr>
+                        <tr>
+                            <td>Naam bestemming</td>
+                            <td>Polikliniek</td>
+                            <td>E2</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming naam</td>
+                            <td>Polikliniek</td>
+                            <td>D1</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming met naam</td>
+                            <td>Verpleegafdeling</td>
+                            <td>A5</td>
+                        </tr>
+                        <tr>
+                            <td>Naam bestemming</td>
+                            <td>Polikliniek</td>
+                            <td>E2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bestemming</th>
+                            <th>Afdeling</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bestemming naam</td>
+                            <td>Polikliniek</td>
+                            <td>D1</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming met naam</td>
+                            <td>Verpleegafdeling</td>
+                            <td>A5</td>
+                        </tr>
+                        <tr>
+                            <td>Naam bestemming</td>
+                            <td>Polikliniek</td>
+                            <td>E2</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming naam</td>
+                            <td>Polikliniek</td>
+                            <td>D1</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming met naam</td>
+                            <td>Verpleegafdeling</td>
+                            <td>A5</td>
+                        </tr>
+                        <tr>
+                            <td>Naam bestemming</td>
+                            <td>Polikliniek</td>
+                            <td>E2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bestemming</th>
+                            <th>Afdeling</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bestemming naam</td>
+                            <td>Polikliniek</td>
+                            <td>D1</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming met naam</td>
+                            <td>Verpleegafdeling</td>
+                            <td>A5</td>
+                        </tr>
+                        <tr>
+                            <td>Naam bestemming</td>
+                            <td>Polikliniek</td>
+                            <td>E2</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming naam</td>
+                            <td>Polikliniek</td>
+                            <td>D1</td>
+                        </tr>
+                        <tr>
+                            <td>Bestemming met naam</td>
+                            <td>Verpleegafdeling</td>
+                            <td>A5</td>
+                        </tr>
+                        <tr>
+                            <td>Naam bestemming</td>
+                            <td>Polikliniek</td>
+                            <td>E2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex-vert">
+                <div class="dir-time">
+                    <div>
+                        <p class="dir-time__time"></p>
+                        <p class="dir-time__date"></p>
+                    </div>
+                    <div class="dir-time__weather">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                            <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                fill="white"
+                                d="M0 336c0 79.5 64.5 144 144 144H512c70.7 0 128-57.3 128-128c0-61.9-44-113.6-102.4-125.4c4.1-10.7 6.4-22.4 6.4-34.6c0-53-43-96-96-96c-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32C167.6 32 96 103.6 96 192c0 2.7 .1 5.4 .2 8.1C40.2 219.8 0 273.2 0 336z"
+                            />
+                        </svg>
+                        <p>Overwegig zonnig</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        const params = new URLSearchParams(location.search);
+
+        function refreshTime() {
+            let now = new Date();
+            let m = moment();
+            let timeElement = document.getElementsByClassName("dir-time__time")[0];
+            let dateElement = document.getElementsByClassName("dir-time__date")[0];
+            timeElement.innerText = m.format("HH:mm");
+            dateElement.innerText = m.format("dddd, D MMMM");
+        }
+
+        function hourlyRefresh() {
+            refreshWeather();
+            refreshQuote();
+        }
+
+        async function refreshWeather() {
+            let weatherElement = document.querySelector(".dir-time__weather > p");
+            let description = await getWeatherDescription();
+            if (!description) return;
+
+            description = description[0].toUpperCase() + description.slice(1);
+            weatherElement.innerText = description;
+        }
+
+        async function refreshQuote() {
+            let quoteElement = document.getElementById("quote");
+            let randomQuote = await getRandomQuote();
+            quoteElement.innerText = randomQuote;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            refreshTime();
+            setInterval(refreshTime, 1000);
+
+            hourlyRefresh();
+            setInterval(hourlyRefresh, 1000 * 60 * 60);
+        });
+    </script>
+</html>
