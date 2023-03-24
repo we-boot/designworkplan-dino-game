@@ -195,6 +195,10 @@
 
     <script>
         const params = new URLSearchParams(location.search);
+        const imgTitle = params.get("imgTitle") || "Waar ben ik?";
+        const imgUrl = params.get("imgUrl") || "/static/directory-demo.png";
+        const descriptionTitle = params.get("descriptionTitle") || "Hoe vind ik mijn bestemming?";
+        const description = params.get("description") || "Lorem ipsum";
 
         function refreshTime() {
             let now = new Date();
@@ -207,7 +211,6 @@
 
         function hourlyRefresh() {
             refreshWeather();
-            refreshQuote();
         }
 
         async function refreshWeather() {
@@ -219,18 +222,17 @@
             weatherElement.innerText = description;
         }
 
-        async function refreshQuote() {
-            let quoteElement = document.getElementById("quote");
-            let randomQuote = await getRandomQuote();
-            quoteElement.innerText = randomQuote;
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
             refreshTime();
             setInterval(refreshTime, 1000);
 
             hourlyRefresh();
             setInterval(hourlyRefresh, 1000 * 60 * 60);
+
+            document.querySelector(".dir-map__title").innerText = imgTitle;
+            document.querySelector(".dir-map__img").src = imgUrl;
+            document.querySelector(".dir-description__title").src = descriptionTitle;
+            document.querySelector(".dir-description__content").src = description;
         });
     </script>
 </html>
