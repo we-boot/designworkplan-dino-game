@@ -29,136 +29,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
     </head>
     <body class="gray-background">
-        <div id="table-grid">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bestemming</th>
-                            <th>Afdeling</th>
-                            <th>Route</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Bestemming naam</td>
-                            <td>Polikliniek</td>
-                            <td>D1</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming met naam</td>
-                            <td>Verpleegafdeling</td>
-                            <td>A5</td>
-                        </tr>
-                        <tr>
-                            <td>Naam bestemming</td>
-                            <td>Polikliniek</td>
-                            <td>E2</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming naam</td>
-                            <td>Polikliniek</td>
-                            <td>D1</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming met naam</td>
-                            <td>Verpleegafdeling</td>
-                            <td>A5</td>
-                        </tr>
-                        <tr>
-                            <td>Naam bestemming</td>
-                            <td>Polikliniek</td>
-                            <td>E2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bestemming</th>
-                            <th>Afdeling</th>
-                            <th>Route</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Bestemming naam</td>
-                            <td>Polikliniek</td>
-                            <td>D1</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming met naam</td>
-                            <td>Verpleegafdeling</td>
-                            <td>A5</td>
-                        </tr>
-                        <tr>
-                            <td>Naam bestemming</td>
-                            <td>Polikliniek</td>
-                            <td>E2</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming naam</td>
-                            <td>Polikliniek</td>
-                            <td>D1</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming met naam</td>
-                            <td>Verpleegafdeling</td>
-                            <td>A5</td>
-                        </tr>
-                        <tr>
-                            <td>Naam bestemming</td>
-                            <td>Polikliniek</td>
-                            <td>E2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bestemming</th>
-                            <th>Afdeling</th>
-                            <th>Route</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Bestemming naam</td>
-                            <td>Polikliniek</td>
-                            <td>D1</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming met naam</td>
-                            <td>Verpleegafdeling</td>
-                            <td>A5</td>
-                        </tr>
-                        <tr>
-                            <td>Naam bestemming</td>
-                            <td>Polikliniek</td>
-                            <td>E2</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming naam</td>
-                            <td>Polikliniek</td>
-                            <td>D1</td>
-                        </tr>
-                        <tr>
-                            <td>Bestemming met naam</td>
-                            <td>Verpleegafdeling</td>
-                            <td>A5</td>
-                        </tr>
-                        <tr>
-                            <td>Naam bestemming</td>
-                            <td>Polikliniek</td>
-                            <td>E2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="flex-hor">
+            <div id="table-grid"></div>
             <div class="flex-vert">
                 <div class="dir-time">
                     <div>
@@ -199,6 +71,7 @@
         const imgUrl = params.get("imgUrl") || "/static/directory-demo.png";
         const descriptionTitle = params.get("descriptionTitle") || "Hoe vind ik mijn bestemming?";
         const description = params.get("description") || "Lorem ipsum";
+        const directorySrc = params.get("directorySrc") || "http://localhost:8055/items/Directory?limit=-1";
 
         function refreshTime() {
             let now = new Date();
@@ -222,12 +95,71 @@
             weatherElement.innerText = description;
         }
 
+        function createRow(items, header = false) {
+            let trEl = document.createElement("tr");
+            for (let i of items) {
+                let cellEl = document.createElement(header ? "th" : "td");
+                cellEl.innerText = i;
+                trEl.appendChild(cellEl);
+            }
+            return trEl;
+        }
+
+        async function setupDirectory(data) {
+            let perColumn = new Map();
+            for (let row of data) {
+                let column = row.column ?? 0;
+
+                let rowEl = createRow([row.destination, row.department, row.route]);
+                if (perColumn.has(column)) {
+                    perColumn.get(column).querySelector("tbody").appendChild(rowEl);
+                } else {
+                    let headerEl = createRow(["Bestemming", "Afdeling", "Route"], true);
+                    let theadEl = document.createElement("thead");
+                    theadEl.appendChild(headerEl);
+
+                    let tbodyEl = document.createElement("tbody");
+                    tbodyEl.appendChild(rowEl);
+
+                    let tableEl = document.createElement("table");
+                    tableEl.appendChild(theadEl);
+                    tableEl.appendChild(tbodyEl);
+
+                    let divEl = document.createElement("div");
+                    divEl.appendChild(tableEl);
+
+                    perColumn.set(column, divEl);
+                }
+            }
+
+            let gridEl = document.getElementById("table-grid");
+            let gridTemplate = [];
+            for (let [col, el] of Array.from(perColumn.entries()).sort(([ka], [kb]) => ka - kb)) {
+                console.log("Column %d:", col, el);
+                gridEl.appendChild(el);
+                gridTemplate.push("1fr");
+            }
+            gridEl.style.gridTemplateColumns = gridTemplate.join(" ");
+        }
+
+        async function setupDirectoryFrom(src) {
+            let res = await fetch(src);
+            if (!res.ok) {
+                console.error("Could not get directory", res.status, await res.text());
+                return;
+            }
+            let data = await res.json();
+            setupDirectory(data.data);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             refreshTime();
             setInterval(refreshTime, 1000);
 
             hourlyRefresh();
             setInterval(hourlyRefresh, 1000 * 60 * 60);
+
+            setupDirectoryFrom(directorySrc);
 
             document.querySelector(".dir-map__title").innerText = imgTitle;
             document.querySelector(".dir-map__img").src = imgUrl;
