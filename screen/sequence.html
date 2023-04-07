@@ -147,8 +147,8 @@
                 if (message.type === "goto-sequence") {
                     const url = new URL(viewUrl);
                     url.pathname += "/screen/sequence.html";
-                    url.searchParams.append("slug", message.slug);
-                    url.searchParams.append("src", serverUrl);
+                    url.searchParams.set("slug", message.slug);
+                    url.searchParams.set("src", serverUrl);
                     console.log("Switching sequence", url);
                     location.href = url.toString();
                     return;
