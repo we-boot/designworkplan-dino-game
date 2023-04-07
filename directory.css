@@ -11,19 +11,27 @@
 #table-grid > div > table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-grid table tr th:nth-child(1) {
+    width: 60%;
+}
+#table-grid table tr th:nth-child(2) {
+    width: 40%;
+}
+#table-grid table tr th:nth-child(3) {
+    width: 40px;
+    text-overflow: clip;
 }
 
 #table-grid td,
 #table-grid th {
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0;
     border-bottom: 1px solid #ffffffaa;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-#table-grid table {
-    /* height: 100%; */
-    table-layout: fixed;
 }
 
 .gray-background {
@@ -36,7 +44,7 @@
 
 .dir-time {
     color: white;
-    margin-top: 36.53px;
+
     display: flex;
     align-items: center;
     padding: 1rem;
@@ -71,9 +79,15 @@
     min-width: 220px;
 }
 
-.flex-vert {
+.dir-side {
     display: flex;
     flex-direction: column;
+    padding: 1rem 1rem 1rem 0;
+    /* margin-top: 36.53px; */
+}
+
+.dir-top-space {
+    padding: 0.5rem;
 }
 
 .flex-hor {

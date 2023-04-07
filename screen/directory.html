@@ -31,7 +31,8 @@
     <body class="gray-background">
         <div class="flex-hor">
             <div id="table-grid"></div>
-            <div class="flex-vert">
+            <div class="dir-side">
+                <p class="dir-top-space">&nbsp;</p>
                 <div class="dir-time">
                     <div>
                         <p class="dir-time__time"></p>
@@ -104,12 +105,13 @@
             }
             return trEl;
         }
-
         async function setupDirectory(data) {
             let perColumn = new Map();
-            for (let row of data) {
-                let column = row.column ?? 0;
-
+            let maxItemsPerColumn = Math.floor(window.innerHeight / 40);
+            console.log("maxItemsPerColumn", maxItemsPerColumn);
+            for (let i = 0; i < data.length; i++) {
+                let row = data[i];
+                let column = Math.floor(i / maxItemsPerColumn);
                 let rowEl = createRow([row.destination, row.department, row.route]);
                 if (perColumn.has(column)) {
                     perColumn.get(column).querySelector("tbody").appendChild(rowEl);
@@ -117,21 +119,16 @@
                     let headerEl = createRow(["Bestemming", "Afdeling", "Route"], true);
                     let theadEl = document.createElement("thead");
                     theadEl.appendChild(headerEl);
-
                     let tbodyEl = document.createElement("tbody");
                     tbodyEl.appendChild(rowEl);
-
                     let tableEl = document.createElement("table");
                     tableEl.appendChild(theadEl);
                     tableEl.appendChild(tbodyEl);
-
                     let divEl = document.createElement("div");
                     divEl.appendChild(tableEl);
-
                     perColumn.set(column, divEl);
                 }
             }
-
             let gridEl = document.getElementById("table-grid");
             let gridTemplate = [];
             for (let [col, el] of Array.from(perColumn.entries()).sort(([ka], [kb]) => ka - kb)) {
