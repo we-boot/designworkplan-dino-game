@@ -98,16 +98,25 @@
 
                 const sceneUrl = new URL(viewUrl);
                 sceneUrl.pathname += getPathForSceneType(scene.collection);
-                for (let k in scene.item) {
+                for (let key in scene.item) {
+                    let value = scene.item[key];
                     if (
-                        typeof k === "object" ||
-                        typeof k === "function" ||
-                        ["duration", "userCreated", "dateCreated", "userUpdated", "dateUpdated", "id", "sort"].includes(k)
+                        typeof value === "object" ||
+                        typeof value === "function" ||
+                        ["duration", "userCreated", "dateCreated", "userUpdated", "dateUpdated", "id", "sort"].includes(key)
                     ) {
                         // The duration property isn't used by the scene, only by this page, other fields are not relevant
                         continue;
                     }
-                    sceneUrl.searchParams.set(k, scene.item[k]);
+
+                    // Prepend with server assets url if it is a file id
+                    if (["imageFile"].includes(key) && typeof value === "string" && !value.startsWith("http")) {
+                        let url = new URL(serverUrl);
+                        url.pathname = "/assets/" + value;
+                        value = url.toString();
+                    }
+
+                    sceneUrl.searchParams.set(key, value);
                 }
                 // Don't use sequence.id for this! The sequence could be played on multiple locations at the same time!
                 sceneUrl.searchParams.set("roomId", roomId);
