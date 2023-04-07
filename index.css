@@ -190,3 +190,8 @@ body {
     margin-left: auto;
     align-self: flex-end;
 }
+
+iframe {
+    border: none;
+    outline: none;
+}

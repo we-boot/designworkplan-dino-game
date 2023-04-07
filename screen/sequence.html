@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>designworkplan dino game</title>
+        <link rel="stylesheet" href="../index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+        <script src="../index.js"></script>
+        <script src="../sequence.js"></script>
+        <script src="../connection.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <iframe id="sequence" height="100%" width="100%"></iframe>
+    </body>
+
+    <script>
+        const params = new URLSearchParams(location.search);
+        const serverUrl = params.get("src") || params.get("serverUrl") || "https://dashboard-directory.designworkplan.weboot.nl/";
+        const viewUrl = location.href.replace("/screen/sequence.html", "").replace("/screen/sequence", "");
+        const slug = params.get("slug") || (location.hash ? location.hash.substring(1) : "pillar-l2");
+
+        const fetchUrl = new URL(serverUrl);
+        fetchUrl.pathname = "/items/Sequence";
+        fetchUrl.searchParams.append("fields[]", "*");
+        fetchUrl.searchParams.append("fields[]", "scenes.collection");
+        fetchUrl.searchParams.append("fields[]", "scenes.item.*");
+        fetchUrl.searchParams.append("fields[]", "scenes.item.directory.Directory_id.*");
+        fetchUrl.searchParams.append("filter[slug]", slug);
+
+        const iframe = document.getElementById("sequence");
+
+        function getPathForSceneType(sceneType) {
+            switch (sceneType) {
+                case "SceensaverScene":
+                    return "/screen/blocks";
+                case "DigitalClockScene":
+                    return "/screen/";
+                case "ArrowScene":
+                    return "/screen/sign";
+                case "MultiArrowScene":
+                    return "/screen/multi-sign";
+                case "DoodleScene":
+                    return "/screen/doodle";
+                case "AnalogClockScene":
+                    return "/screen/analog-clock";
+                case "GameScene":
+                    return "/screen/qr";
+                case "CountdownScene":
+                    return "/screen/countdown";
+                case "CardsScene":
+                    return "/screen/cards";
+                case "MediaScene":
+                    return "/screen/media";
+                case "TextScene":
+                    return "/screen/sign";
+                case "DirectoryScene":
+                    return "/screen/directory";
+                default:
+                    throw new Error("Unknown scene type " + sceneType);
+            }
+        }
+
+        function startSequence(sequence) {
+            const scenes = sequence.scenes;
+
+            let currentSceneIndex = -1;
+            let currentTransitionHandle = null;
+
+            function gotoNextSceneIn(delayMs) {
+                if (currentTransitionHandle) {
+                    clearTimeout(currentTransitionHandle);
+                }
+                currentTransitionHandle = setTimeout(gotoNextScene, delayMs);
+            }
+
+            function gotoNextScene() {
+                const nextSceneIndex = currentSceneIndex + 1;
+                if (nextSceneIndex >= scenes.length) {
+                    // At last scene
+                    if (!sequence.repeat) {
+                        console.warn("End of sequence, NOT repeating");
+                        return;
+                    }
+
+                    console.log("End of sequence, repeating");
+                    nextSceneIndex = 0;
+                }
+
+                const scene = scenes[nextSceneIndex];
+                console.log("Playing scene", scene);
+
+                const sceneUrl = new URL(viewUrl);
+                sceneUrl.pathname += getPathForSceneType(scene.collection);
+                for (let k in scene.item) {
+                    if (["duration", "userCreated", "dateCreated", "userUpdated", "dateUpdated", "id", "sort"].includes(k)) {
+                        // The duration property isn't used by the scene, only by this page, other fields are not relevant
+                        continue;
+                    }
+                    sceneUrl.searchParams.set(k, scene.item[k]);
+                }
+                // Don't use sequence.id for this! The sequence could be played on multiple locations at the same time!
+                sceneUrl.searchParams.set("roomId", roomId);
+                console.log("Scene url", sceneUrl.toString());
+                currentSceneIndex = nextSceneIndex;
+                iframe.src = sceneUrl.toString();
+
+                let nextSceneDelayMs = (scene.item.duration || 60) * 1000;
+                if (scene.collection === "CountdownScene") {
+                    const diffMs = new Date(scene.item.to).getTime() - new Date().getTime();
+                    if (diffMs > 0) {
+                        nextSceneDelayMs += diffMs;
+                    }
+                }
+                console.log("Going to next scene in", nextSceneDelayMs / 1000, "seconds");
+
+                gotoNextSceneIn(nextSceneDelayMs);
+            }
+
+            window.addEventListener("pubnub", (ev) => {
+                console.log("Received pubnub event", ev);
+
+                let message = ev.detail.message;
+                console.log("Received pubnub message", message);
+                if (message.type === "goto-sequence") {
+                    const url = new URL(viewUrl);
+                    url.pathname += "/screen/sequence.html";
+                    url.searchParams.append("slug", message.slug);
+                    url.searchParams.append("src", serverUrl);
+                    console.log("Switching sequence", url);
+                    location.href = url.toString();
+                    return;
+                } else if (message.type === "pause-sequence") {
+                    console.log("Delay transition because received pause sequence");
+                    gotoNextSceneIn(30000);
+                } else if (ev.detail.channel === `game-${roomId}`) {
+                    // Delay transition because game is being played
+                    console.log("Delay transition because playing game");
+                    gotoNextSceneIn(30000);
+                }
+            });
+
+            subscribeSequence(sequence.id);
+            gotoNextScene();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch(fetchUrl)
+                .then((e) => e.json())
+                .then((data) => {
+                    const sequence = data.data[0];
+                    console.log("Fetched sequence", sequence);
+                    startSequence(sequence);
+
+                    if (typeof sequence.width === "number") {
+                        iframe.width = sequence.width + "%";
+                    }
+                    if (typeof sequence.height === "number") {
+                        iframe.height = sequence.height + "%";
+                    }
+
+                    // Back up sequence for offline use
+                    localStorage.setItem("sequence", JSON.stringify(sequence));
+                })
+                .catch((ex) => {
+                    console.error("Could not fetch sequence", ex);
+
+                    const offlineSequence = localStorage.getItem("sequence");
+                    if (offlineSequence) {
+                        const sequence = JSON.parse(offlineSequence);
+                        console.log("Using offline sequence backup", sequence);
+                        startSequence(sequence);
+                    } else {
+                        console.warn("No offline sequence available, retrying over 60 seconds");
+
+                        // Reload page in 60 seconds
+                        setTimeout(() => {
+                            location.href = location.href;
+                        }, 60000);
+                    }
+                });
+
+            console.log("fetchUrl", fetchUrl.toString());
+        });
+    </script>
+</html>

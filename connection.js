@@ -23,24 +23,22 @@ function subscribeRoom(roomId) {
     });
 }
 
-let roomId = new URLSearchParams(location.search).get("roomId") || "default"; // || window.crypto.randomUUID().slice(0, 8);
+function subscribeSequence(sequenceId) {
+    pubnub.subscribe({
+        channels: ["sequence-" + sequenceId],
+    });
+}
+
+let roomId = new URLSearchParams(location.search).get("roomId") || Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16);
 console.log("Room id", roomId);
 
 window.addEventListener("pubnub", (ev) => {
     // console.log("Received pubnub event", ev);
 
-    let afterGameUrl = getNextSceneUrl() || location.href;
-
     let message = ev.detail.message;
     if (message.type === "connected") {
-        location.href =
-            WEBSITE_ROOT +
-            `/screen/game/${message.game}?redirect=${encodeURIComponent(afterGameUrl)}&roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(
-                message.name
-            )}`;
-    } else if (message.type === "pause-sequence") {
-        console.log("Received pause-sequence");
-        setTransitionDelay(30000);
+        // Game has started, redirect to game screen
+        location.href = WEBSITE_ROOT + `/screen/game/${message.game}?roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(message.name)}`;
     } else {
         console.warn("Received unknown pubnub message", message);
     }
