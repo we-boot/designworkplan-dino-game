@@ -62,7 +62,7 @@
     <script>
         const params = new URLSearchParams(location.search);
         const name = params.get("name") || "guest";
-        const redirect = params.has("redirect") ? params.get("redirect") : "/screen/index.html";
+        const redirect = params.get("redirect");
 
         console.log({ name, roomId, redirect });
 
@@ -94,7 +94,9 @@
         });
 
         function returnHome() {
-            location.href = redirect;
+            if (redirect) {
+                location.href = redirect;
+            }
         }
 
         let noActivityTimer = setTimeout(returnHome, NO_ACTIVITY_TIME);

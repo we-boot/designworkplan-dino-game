@@ -81,7 +81,7 @@
             }
 
             function gotoNextScene() {
-                const nextSceneIndex = currentSceneIndex + 1;
+                let nextSceneIndex = currentSceneIndex + 1;
                 if (nextSceneIndex >= scenes.length) {
                     // At last scene
                     if (!sequence.repeat) {
@@ -99,7 +99,11 @@
                 const sceneUrl = new URL(viewUrl);
                 sceneUrl.pathname += getPathForSceneType(scene.collection);
                 for (let k in scene.item) {
-                    if (["duration", "userCreated", "dateCreated", "userUpdated", "dateUpdated", "id", "sort"].includes(k)) {
+                    if (
+                        typeof k === "object" ||
+                        typeof k === "function" ||
+                        ["duration", "userCreated", "dateCreated", "userUpdated", "dateUpdated", "id", "sort"].includes(k)
+                    ) {
                         // The duration property isn't used by the scene, only by this page, other fields are not relevant
                         continue;
                     }
@@ -110,6 +114,9 @@
                 console.log("Scene url", sceneUrl.toString());
                 currentSceneIndex = nextSceneIndex;
                 iframe.src = sceneUrl.toString();
+                iframe.onload = () => {
+                    iframe.contentWindow.postMessage({ type: "scene", scene: scene }, "*");
+                };
 
                 let nextSceneDelayMs = (scene.item.duration || 60) * 1000;
                 if (scene.collection === "CountdownScene") {
