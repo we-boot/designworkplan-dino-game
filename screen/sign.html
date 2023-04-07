@@ -65,7 +65,7 @@
                 let signRotation = parseInt(params.get("rotation"));
                 let signTitle = params.has("text") ? params.get("text") : "Text here";
                 let signTitleElement = document.getElementById("sign-title");
-                signTitleElement.innerText = signTitle;
+                signTitleElement.innerHTML = signTitle;
 
                 console.log("signRotation", signRotation);
 

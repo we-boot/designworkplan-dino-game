@@ -162,6 +162,13 @@
                 }
             });
 
+            if (typeof sequence.width === "number") {
+                iframe.width = sequence.width + "%";
+            }
+            if (typeof sequence.height === "number") {
+                iframe.height = sequence.height + "%";
+            }
+
             subscribeSequence(sequence.id);
             gotoNextScene();
         }
@@ -173,13 +180,6 @@
                     const sequence = data.data[0];
                     console.log("Fetched sequence", sequence);
                     startSequence(sequence);
-
-                    if (typeof sequence.width === "number") {
-                        iframe.width = sequence.width + "%";
-                    }
-                    if (typeof sequence.height === "number") {
-                        iframe.height = sequence.height + "%";
-                    }
 
                     // Back up sequence for offline use
                     localStorage.setItem("sequence", JSON.stringify(sequence));
