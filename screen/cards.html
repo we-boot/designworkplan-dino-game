@@ -24,7 +24,6 @@
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
         <script src="../background.js"></script>
-        <script src="../scene.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
@@ -41,10 +40,9 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadParticles();
             getCards().then((cards) => {
                 let carouselContainer = document.getElementById("carousel-content");
                 console.log("cards", cards);
@@ -86,4 +84,5 @@
         });
     </script>
     <script src="../cards.js"></script>
+    <script src="../scene.js"></script>
 </html>

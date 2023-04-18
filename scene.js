@@ -6,9 +6,6 @@ function setupScene(scene) {
     if (scene.background) {
         setBackground(scene.background);
     }
-    if (scene.directory) {
-        setupDirectory(scene.directory.map((e) => e["Directory_id"]));
-    }
 
     // Allow different scenes to implement different initializations
     window.dispatchEvent(new CustomEvent("scene", { detail: { scene: scene } }));

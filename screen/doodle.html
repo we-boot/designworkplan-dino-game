@@ -35,29 +35,27 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
 
-        async function refreshDoodle() {
-            let doodleElement = document.getElementById("doodle-image");
-            let doodleTitleElement = document.getElementById("doodle-title");
+            async function refreshDoodle() {
+                let doodleElement = document.getElementById("doodle-image");
+                let doodleTitleElement = document.getElementById("doodle-title");
 
-            let res = await fetch("https://google-doodle.weboot.nl/api/doodle");
-            if (!res.ok) {
-                console.error("Could not fetch doodle information", await res.text());
-                return;
+                let res = await fetch("https://google-doodle.weboot.nl/api/doodle");
+                if (!res.ok) {
+                    console.error("Could not fetch doodle information", await res.text());
+                    return;
+                }
+
+                let data = await res.json();
+                doodleElement.src = data.alternate_url;
+                doodleTitleElement.innerText = data.title;
             }
 
-            let data = await res.json();
-            doodleElement.src = data.alternate_url;
-            doodleTitleElement.innerText = data.title;
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
             refreshDoodle();
             setInterval(refreshDoodle, 1000 * 60 * 60 * 1);
         });
-
-        getLatestDoodle();
     </script>
     <script src="../scene.js"></script>
 </html>

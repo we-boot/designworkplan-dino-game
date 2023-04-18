@@ -33,12 +33,15 @@ let roomId = new URLSearchParams(location.search).get("roomId") || Math.floor(Ma
 console.log("Room id", roomId);
 
 window.addEventListener("pubnub", (ev) => {
-    // console.log("Received pubnub event", ev);
+    console.log("Received pubnub event", ev.detail.message);
 
     let message = ev.detail.message;
     if (message.type === "connected") {
         // Game has started, redirect to game screen
-        location.href = WEBSITE_ROOT + `/screen/game/${message.game}?roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(message.name)}`;
+        if (!location.href.includes("/controller/")) {
+            location.href =
+                WEBSITE_ROOT + `/screen/game/${message.game}?roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(message.name)}`;
+        }
     } else {
         console.warn("Received unknown pubnub message", message);
     }

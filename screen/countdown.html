@@ -57,15 +57,14 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            if (params.has("to")) {
-                let toDate = params.get("to");
-                let text = params.get("text");
-                let arrowText = params.get("arrowText");
-                let arrowRotation = parseInt(params.get("arrowRotation"));
-                let arrowDuration = params.get("arrowDuration");
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
+            if (scene.to) {
+                let toDate = scene.to;
+                let text = scene.text;
+                let arrowText = scene.arrowText;
+                let arrowRotation = parseInt(scene.arrowRotation);
+                let arrowDuration = scene.arrowDuration;
 
                 let signTitleElement = document.getElementById("sign-title");
                 signTitleElement.innerText = arrowText;

@@ -47,38 +47,38 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
 
-        function refreshTime() {
-            let now = new Date();
-            let m = moment();
-            let timeElement = document.getElementById("time");
-            let dateElement = document.getElementById("date");
-            timeElement.innerText = m.format("HH:mm");
-            dateElement.innerText = m.format("dddd, D MMMM");
-        }
+            function refreshTime() {
+                let now = new Date();
+                let m = moment();
+                let timeElement = document.getElementById("time");
+                let dateElement = document.getElementById("date");
+                timeElement.innerText = m.format("HH:mm");
+                dateElement.innerText = m.format("dddd, D MMMM");
+            }
 
-        function hourlyRefresh() {
-            refreshWeather();
-            refreshQuote();
-        }
+            function hourlyRefresh() {
+                refreshWeather();
+                refreshQuote();
+            }
 
-        async function refreshWeather() {
-            let weatherElement = document.getElementById("weather");
-            let description = await getWeatherDescription();
-            if (!description) return;
+            async function refreshWeather() {
+                let weatherElement = document.getElementById("weather");
+                let description = await getWeatherDescription();
+                if (!description) return;
 
-            description = description[0].toUpperCase() + description.slice(1);
-            weatherElement.innerText = description;
-        }
+                description = description[0].toUpperCase() + description.slice(1);
+                weatherElement.innerText = description;
+            }
 
-        async function refreshQuote() {
-            let quoteElement = document.getElementById("quote");
-            let randomQuote = await getRandomQuote();
-            quoteElement.innerText = randomQuote;
-        }
+            async function refreshQuote() {
+                let quoteElement = document.getElementById("quote");
+                let randomQuote = await getRandomQuote();
+                quoteElement.innerText = randomQuote;
+            }
 
-        document.addEventListener("DOMContentLoaded", () => {
             refreshTime();
             setInterval(refreshTime, 1000);
 

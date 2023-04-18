@@ -98,7 +98,9 @@
 
                 const sceneUrl = new URL(viewUrl);
                 sceneUrl.pathname += getPathForSceneType(scene.collection);
-                for (let key in scene.item) {
+
+                // Version 2 works using message passing via iframe
+                /*for (let key in scene.item) {
                     let value = scene.item[key];
                     if (
                         typeof value === "object" ||
@@ -117,9 +119,11 @@
                     }
 
                     sceneUrl.searchParams.set(key, value);
-                }
+                }*/
+
                 // Don't use sequence.id for this! The sequence could be played on multiple locations at the same time!
                 sceneUrl.searchParams.set("roomId", roomId);
+                sceneUrl.searchParams.set("v", "2");
                 console.log("Scene url", sceneUrl.toString());
                 currentSceneIndex = nextSceneIndex;
                 iframe.src = sceneUrl.toString();

@@ -51,20 +51,19 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            let type = params.get("urlType");
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
+            let type = scene.urlType;
             let imageElement = document.getElementById("image-media");
             let videoElement = document.getElementById("video-media");
 
             if (type === "image") {
-                imageElement.src = params.get("url") || params.get("imageFile");
+                imageElement.src = scene.url || scene.imageFile;
                 videoElement.remove();
             } else if (type === "youtube") {
-                videoElement.width = params.has("width") ? parseInt(params.get("width")) : window.innerWidth * 0.75;
-                videoElement.height = params.has("height") ? parseInt(params.get("height")) : window.innerHeight * 0.75;
-                videoElement.src = "https://www.youtube.com/embed/" + params.get("url") || params.get("imageFile");
+                videoElement.width = scene.width ? parseInt(scene.width) : window.innerWidth * 0.75;
+                videoElement.height = scene.height ? parseInt(scene.height) : window.innerHeight * 0.75;
+                videoElement.src = "https://www.youtube.com/embed/" + (scene.url || scene.imageFile);
                 imageElement.remove();
             }
 

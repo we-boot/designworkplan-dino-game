@@ -85,12 +85,11 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            if (params.has("rightText") || params.has("leftText")) {
-                let leftSignRotation = parseInt(params.get("leftRotation"));
-                let leftSignTitle = params.has("leftText") ? params.get("leftText") : "Follow";
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
+            if (scene.rightText || scene.leftText) {
+                let leftSignRotation = parseInt(scene.leftRotation);
+                let leftSignTitle = scene.leftText || "Follow";
                 let leftSignTitleElement = document.getElementById("sign-left-title");
                 leftSignTitleElement.innerText = leftSignTitle;
                 let leftSignElement = document.getElementById("sign-left-icon");
@@ -100,8 +99,8 @@
                     leftSignElement.style.display = "none";
                 }
 
-                let rightSignRotation = parseInt(params.get("rightRotation"));
-                let rightSignTitle = params.has("rightText") ? params.get("rightText") : "Follow";
+                let rightSignRotation = parseInt(scene.rightRotation);
+                let rightSignTitle = scene.rightText || "Follow";
                 let rightSignTitleElement = document.getElementById("sign-right-title");
                 rightSignTitleElement.innerText = rightSignTitle;
                 let rightSignElement = document.getElementById("sign-right-icon");

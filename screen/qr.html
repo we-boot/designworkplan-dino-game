@@ -31,15 +31,16 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
+            let game = scene.game || "dino";
 
-        let game = params.get("game") || "dino";
-
-        let qrContent = WEBSITE_ROOT + `/controller/${game}?roomId=${encodeURIComponent(roomId)}&game=${encodeURIComponent(game)}`;
-        console.log("qrContent", qrContent);
-        let qrCode = new QRCode(document.getElementById("qr-code"), {
-            text: qrContent,
-            correctLevel: QRCode.CorrectLevel.H,
+            let qrContent = WEBSITE_ROOT + `/controller/${game}?roomId=${encodeURIComponent(roomId)}&game=${encodeURIComponent(game)}`;
+            console.log("qrContent", qrContent);
+            let qrCode = new QRCode(document.getElementById("qr-code"), {
+                text: qrContent,
+                correctLevel: QRCode.CorrectLevel.H,
+            });
         });
     </script>
     <script src="../scene.js"></script>
