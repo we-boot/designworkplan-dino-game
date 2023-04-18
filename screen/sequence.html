@@ -80,6 +80,16 @@
                 currentTransitionHandle = setTimeout(gotoNextScene, delayMs);
             }
 
+            function assetToUrl(assetId) {
+                if (!assetId.startsWith("http")) {
+                    let url = new URL(serverUrl);
+                    url.pathname = "/assets/" + assetId;
+                    return url.toString();
+                } else {
+                    return assetId;
+                }
+            }
+
             function gotoNextScene() {
                 let nextSceneIndex = currentSceneIndex + 1;
                 if (nextSceneIndex >= scenes.length) {
@@ -94,6 +104,12 @@
                 }
 
                 const scene = scenes[nextSceneIndex];
+
+                // Convert asset ids to urls
+                if (scene.item.imageFile) {
+                    scene.item.imageFile = assetToUrl(scene.item.imageFile);
+                }
+
                 console.log("Playing scene", scene);
 
                 const sceneUrl = new URL(viewUrl);
