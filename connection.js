@@ -38,7 +38,7 @@ window.addEventListener("pubnub", (ev) => {
     let message = ev.detail.message;
     if (message.type === "connected") {
         // Game has started, redirect to game screen
-        if (!location.href.includes("/controller/")) {
+        if (!location.href.includes("/controller/") && !location.href.includes("/sequence")) {
             location.href =
                 WEBSITE_ROOT + `/screen/game/${message.game}?roomId=${encodeURIComponent(roomId)}&name=${encodeURIComponent(message.name)}`;
         }
