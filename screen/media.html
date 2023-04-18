@@ -53,17 +53,19 @@
     <script>
         window.addEventListener("scene", (ev) => {
             let scene = ev.detail.scene;
-            let type = scene.urlType;
+            let type = scene.type || scene.urlType;
             let imageElement = document.getElementById("image-media");
             let videoElement = document.getElementById("video-media");
 
             if (type === "image") {
-                imageElement.src = scene.url || scene.imageFile;
+                imageElement.src = scene.imageFile || scene.url;
                 videoElement.remove();
             } else if (type === "youtube") {
                 videoElement.width = scene.width ? parseInt(scene.width) : window.innerWidth * 0.75;
                 videoElement.height = scene.height ? parseInt(scene.height) : window.innerHeight * 0.75;
-                videoElement.src = "https://www.youtube.com/embed/" + (scene.url || scene.imageFile);
+
+                let ytUrl = new URL(scene.url);
+                videoElement.src = "https://www.youtube.com/embed/" + ytUrl.searchParams.get("v");
                 imageElement.remove();
             }
 
