@@ -28,7 +28,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
     </head>
-    <body class="gray-background">
+    <body>
         <div class="flex-hor">
             <div id="table-grid"></div>
             <div class="dir-side">
@@ -161,12 +161,13 @@
             document.querySelector(".dir-description__content").innerHTML = description;
         });
 
-        window.addEventListener("message", (ev) => {
-            if (ev.data.type === "scene") {
-                let scene = ev.data.scene;
-                console.log("Received scene window message", scene);
-                setupDirectory(scene.item.directory.map((e) => e["Directory_id"]));
-            }
-        });
+        // window.addEventListener("message", (ev) => {
+        //     if (ev.data.type === "scene") {
+        //         let scene = ev.data.scene;
+        //         console.log("Received scene window message", scene);
+        //         setupDirectory(scene.item.directory.map((e) => e["Directory_id"]));
+        //     }
+        // });
     </script>
+    <script src="../scene.js"></script>
 </html>

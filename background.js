@@ -69,6 +69,9 @@ async function loadParticles(config = {}) {
     await tsParticles.load("tsparticles", mergedConfig);
 }
 
+// For backwards compatibility
+let backgroundHasBeenSetUp = false;
+
 function setBackground(description) {
     switch (description.type) {
         case "particles":
@@ -77,32 +80,20 @@ function setBackground(description) {
         case "css":
             document.body.style.background = description.css || "radial-gradient(#222, #111)";
             break;
-        case "empty":
+        case "color":
+            document.body.style.background = description.color;
             break;
         default:
             console.error("Unknown background", description);
             break;
     }
+
+    backgroundHasBeenSetUp = true;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(location.search);
-    if (params.has("background")) {
-        let backgroundDescText = params.get("background");
-
-        let backgroundDescription;
-        try {
-            backgroundDescription = JSON.parse(backgroundDescText);
-        } catch (ex) {
-            console.error("Could not parse background description, using default background", backgroundDescText);
-            setBackground({ type: "particles" });
-            return;
-        }
-
-        console.log("Setting background to", backgroundDescription);
-        setBackground(backgroundDescription);
-    } else {
+setTimeout(() => {
+    if (!backgroundHasBeenSetUp) {
         console.log("No background specified, using default particles");
         setBackground({ type: "particles" });
     }
-});
+}, 250);

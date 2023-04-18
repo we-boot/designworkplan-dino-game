@@ -10,7 +10,6 @@
         <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet" />
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
         <script src="../index.js"></script>
-        <script src="../sequence.js"></script>
         <script src="../connection.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,6 +30,7 @@
         fetchUrl.searchParams.append("fields[]", "*");
         fetchUrl.searchParams.append("fields[]", "scenes.collection");
         fetchUrl.searchParams.append("fields[]", "scenes.item.*");
+        fetchUrl.searchParams.append("fields[]", "scenes.item.background.*");
         fetchUrl.searchParams.append("fields[]", "scenes.item.directory.Directory_id.*");
         fetchUrl.searchParams.append("filter[slug]", slug);
 

@@ -23,6 +23,7 @@
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
         <script src="../background.js"></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
@@ -56,12 +57,11 @@
     </body>
 
     <script>
-        const params = new URLSearchParams(location.search);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            if (params.has("text")) {
-                let signRotation = parseInt(params.get("rotation"));
-                let signTitle = params.has("text") ? params.get("text") : "Text here";
+        window.addEventListener("scene", (ev) => {
+            let scene = ev.detail.scene;
+            if (scene.text) {
+                let signRotation = parseInt(scene.rotation);
+                let signTitle = scene.text || "Text here";
                 let signTitleElement = document.getElementById("sign-title");
                 signTitleElement.innerHTML = signTitle;
 
@@ -78,4 +78,5 @@
             }
         });
     </script>
+    <script src="../scene.js"></script>
 </html>

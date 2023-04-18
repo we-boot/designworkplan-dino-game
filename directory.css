@@ -34,10 +34,6 @@
     text-overflow: ellipsis;
 }
 
-.gray-background {
-    background: radial-gradient(#222, #111);
-}
-
 * {
     font-family: "Source Sans Pro", sans-serif;
 }
