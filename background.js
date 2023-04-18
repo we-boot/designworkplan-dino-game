@@ -75,10 +75,10 @@ let backgroundHasBeenSetUp = false;
 function setBackground(description) {
     switch (description.type) {
         case "particles":
-            loadParticles(description.config);
+            loadParticles(typeof description.config === "string" ? JSON.parse(description.config) : description.config);
             break;
         case "css":
-            document.body.style.background = description.css || "radial-gradient(#222, #111)";
+            document.body.style.background = description.css || description.config || "radial-gradient(#222, #111)";
             break;
         case "color":
             document.body.style.background = description.color;
