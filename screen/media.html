@@ -54,8 +54,6 @@
         const params = new URLSearchParams(location.search);
 
         document.addEventListener("DOMContentLoaded", () => {
-            loadParticles();
-
             let type = params.get("urlType");
             let imageElement = document.getElementById("image-media");
             let videoElement = document.getElementById("video-media");

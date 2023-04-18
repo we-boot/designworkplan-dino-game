@@ -88,8 +88,6 @@
         const params = new URLSearchParams(location.search);
 
         document.addEventListener("DOMContentLoaded", () => {
-            loadParticles();
-
             if (params.has("rightText") || params.has("leftText")) {
                 let leftSignRotation = parseInt(params.get("leftRotation"));
                 let leftSignTitle = params.has("leftText") ? params.get("leftText") : "Follow";

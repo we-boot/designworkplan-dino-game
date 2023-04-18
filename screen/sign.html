@@ -59,8 +59,6 @@
         const params = new URLSearchParams(location.search);
 
         document.addEventListener("DOMContentLoaded", () => {
-            loadParticles();
-
             if (params.has("text")) {
                 let signRotation = parseInt(params.get("rotation"));
                 let signTitle = params.has("text") ? params.get("text") : "Text here";

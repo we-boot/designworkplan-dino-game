@@ -43,7 +43,6 @@
                     <div class="qr-container" id="qr-code" style="image-rendering: pixelated"></div>
                 </div>
             </div>
-            <canvas id="background-canvas"></canvas>
         </div>
     </body>
 
@@ -82,7 +81,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             refreshTime();
             setInterval(refreshTime, 1000);
-            loadParticles();
 
             hourlyRefresh();
             setInterval(hourlyRefresh, 1000 * 60 * 60);
