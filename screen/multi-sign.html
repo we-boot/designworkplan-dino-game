@@ -91,7 +91,7 @@
                 let leftSignRotation = parseInt(scene.leftRotation);
                 let leftSignTitle = scene.leftText || "Follow";
                 let leftSignTitleElement = document.getElementById("sign-left-title");
-                leftSignTitleElement.innerText = leftSignTitle;
+                leftSignTitleElement.innerHTML = leftSignTitle;
                 let leftSignElement = document.getElementById("sign-left-icon");
                 if (!isNaN(leftSignRotation)) {
                     leftSignElement.style.transform = `rotate(${leftSignRotation}deg)`;
@@ -102,7 +102,7 @@
                 let rightSignRotation = parseInt(scene.rightRotation);
                 let rightSignTitle = scene.rightText || "Follow";
                 let rightSignTitleElement = document.getElementById("sign-right-title");
-                rightSignTitleElement.innerText = rightSignTitle;
+                rightSignTitleElement.innerHTML = rightSignTitle;
                 let rightSignElement = document.getElementById("sign-right-icon");
                 if (!isNaN(rightSignRotation)) {
                     rightSignElement.style.transform = `rotate(${rightSignRotation}deg)`;
