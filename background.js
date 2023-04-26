@@ -73,6 +73,7 @@ async function loadParticles(config = {}) {
 let backgroundHasBeenSetUp = false;
 
 function setBackground(description) {
+    console.log("set background", description);
     switch (description.type) {
         case "particles":
             loadParticles(typeof description.config === "string" ? JSON.parse(description.config) : description.config);
@@ -83,6 +84,39 @@ function setBackground(description) {
         case "color":
             document.body.style.background = description.color;
             break;
+        case "url":
+            if (description.url.startsWith("https://www.youtube.com/")) {
+                let ytUrl = new URL(description.url);
+                let ytEmbedUrl = `https://www.youtube.com/embed/${ytUrl.searchParams.get("v")}?autoplay=1&controls=0&loop=1&mute=1`; // Make sure to mute, otherwise autoplay won't work!
+
+                let iframeEl = document.createElement("iframe");
+                iframeEl.setAttribute("id", "ytplayer");
+                iframeEl.setAttribute("type", "text/html");
+                iframeEl.setAttribute("width", String(window.innerWidth));
+                iframeEl.setAttribute("height", String(window.innerHeight));
+                iframeEl.setAttribute("src", ytEmbedUrl);
+                iframeEl.setAttribute("frameborder", String(0));
+                iframeEl.setAttribute("allow", "autoplay; fullscreen");
+                iframeEl.style.position = "absolute";
+                iframeEl.style.inset = "0";
+                iframeEl.style.zIndex = -1;
+
+                document.body.appendChild(iframeEl);
+            } else {
+                console.error("Could not render url background", description);
+            }
+            break;
+        case "media":
+            if (description.mediaFile) {
+                document.body.style.background = `url(${description.mediaFile})`;
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundRepeat = "no-repeat";
+                document.body.style.backgroundPosition = "center";
+            } else {
+                console.error("Could not render media background", description);
+            }
+            break;
+
         default:
             console.error("Unknown background", description);
             break;

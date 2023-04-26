@@ -16,7 +16,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
     </head>
     <body>
-        <iframe id="sequence" height="100%" width="100%"></iframe>
+        <iframe id="sequence" height="100%" width="100%" allow="autoplay; fullscreen"></iframe>
     </body>
 
     <script>
@@ -108,6 +108,9 @@
                 // Convert asset ids to urls
                 if (scene.item.imageFile) {
                     scene.item.imageFile = assetToUrl(scene.item.imageFile);
+                }
+                if (scene.item.background?.mediaFile) {
+                    scene.item.background.mediaFile = assetToUrl(scene.item.background.mediaFile);
                 }
 
                 console.log("Playing scene", scene);
