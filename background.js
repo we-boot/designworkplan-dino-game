@@ -74,12 +74,18 @@ let backgroundHasBeenSetUp = false;
 
 function setBackground(description) {
     console.log("set background", description);
+
+    if (description.customCss) {
+        let styleEl = document.createElement("style");
+        styleEl.innerText = description.customCss;
+        document.body.appendChild(styleEl);
+    }
+
     switch (description.type) {
+        case "blank":
+            break;
         case "particles":
             loadParticles(typeof description.config === "string" ? JSON.parse(description.config) : description.config);
-            break;
-        case "css":
-            document.body.style.background = description.css || description.config || "radial-gradient(#222, #111)";
             break;
         case "color":
             document.body.style.background = description.color;
