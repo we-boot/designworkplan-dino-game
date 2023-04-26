@@ -65,12 +65,11 @@ tr {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Work Sans", sans-serif;
 }
 
 body,
 html {
-    font-family: sans-serif;
+    font-family: "Work Sans", sans-serif;
     height: 100%;
     overflow: hidden;
 }

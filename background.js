@@ -81,6 +81,16 @@ function setBackground(description) {
         document.body.appendChild(styleEl);
     }
 
+    if (description.fontFamily) {
+        document.body.style.fontFamily = `"${description.fontFamily}", sans-serif`;
+
+        // Create <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&display=swap" rel="stylesheet">
+        let linkEl = document.createElement("link");
+        linkEl.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(description.fontFamily)}&display=swap`;
+        linkEl.rel = "stylesheet";
+        document.head.appendChild(linkEl);
+    }
+
     switch (description.type) {
         case "blank":
             break;
