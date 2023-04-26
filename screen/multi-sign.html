@@ -28,33 +28,6 @@
     </head>
     <body>
         <div class="center-spread">
-            <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
-                <label for="title-input">Left sign title</label>
-                <input name="leftText" id="title-input" type="text" />
-                <label for="rotation-input">Left sign direction</label>
-                <select id="rotation-input" name="leftRotation">
-                    <option value="0">Left</option>
-                    <option value="90">Up</option>
-                    <option value="180">Right</option>
-                    <option value="-90">Down</option>
-                </select>
-                <br />
-                <label for="title-input">Right sign title</label>
-                <input name="rightText" id="title-input" type="text" />
-                <label for="rotation-input">Right sign direction</label>
-                <select id="rotation-input" name="rightRotation">
-                    <option value="0">Left</option>
-                    <option value="90">Up</option>
-                    <option value="180">Right</option>
-                    <option value="-90">Down</option>
-                </select>
-                <br />
-
-                <!-- <label for="rotation-input">Rotation (degrees)</label> -->
-                <!-- <input name="rotation" id="rotation-input" type="number" /> -->
-                <input type="submit" />
-            </form>
-
             <div>
                 <h2 class="sign-title" id="sign-left-title"></h2>
                 <div class="left-right-animation">
@@ -108,8 +81,6 @@
                 } else {
                     rightSignElement.style.display = "none";
                 }
-
-                document.getElementById("setup-form").remove();
             }
         });
     </script>

@@ -28,15 +28,6 @@
     </head>
     <body>
         <div class="center">
-            <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
-                <label for="src-input">Image URL or YouTube video ID</label>
-                <input name="url" id="src-input" type="text" />
-                <select name="urlType">
-                    <option value="image">Image</option>
-                    <option value="youtube">YouTube video</option>
-                </select>
-                <input type="submit" />
-            </form>
             <img style="max-width: 90%; max-height: 90%" id="image-media" />
             <iframe
                 style="display: block"
@@ -66,12 +57,6 @@
                 let ytUrl = new URL(scene.url);
                 videoElement.src = "https://www.youtube.com/embed/" + ytUrl.searchParams.get("v");
                 imageElement.remove();
-            }
-
-            console.log("remove form", type);
-            if (type) {
-                console.log("remove form");
-                document.getElementById("setup-form").remove();
             }
         });
     </script>

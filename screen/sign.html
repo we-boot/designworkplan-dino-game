@@ -29,19 +29,6 @@
     </head>
     <body>
         <div class="center">
-            <form id="setup-form" action="" method="GET" style="background: white; padding: 1em">
-                <label for="title-input">Sign title</label>
-                <input name="text" id="title-input" type="text" />
-                <label for="rotation-input">Direction</label>
-                <select id="rotation-input" name="rotation">
-                    <option value="0">Left</option>
-                    <option value="180">Right</option>
-                </select>
-                <!-- <label for="rotation-input">Rotation (degrees)</label> -->
-                <!-- <input name="rotation" id="rotation-input" type="number" /> -->
-                <input type="submit" />
-            </form>
-
             <h2 class="sign-title" id="sign-title"></h2>
             <div class="left-right-animation">
                 <svg id="sign-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 300px; height: 300px">
@@ -72,8 +59,6 @@
                 } else {
                     signElement.style.display = "none";
                 }
-
-                document.getElementById("setup-form").remove();
             }
         });
     </script>
