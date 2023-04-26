@@ -24,9 +24,13 @@
         const serverUrl = params.get("src") || params.get("serverUrl") || "https://dashboard-directory.designworkplan.weboot.nl/";
         const viewUrl = location.href.replace("/screen/sequence.html", "").replace("/screen/sequence", "");
         const slug = params.get("slug") || (location.hash ? location.hash.substring(1) : "pillar-l2");
+        const token = params.get("token");
 
         const fetchUrl = new URL(serverUrl);
         fetchUrl.pathname = "/items/Sequence";
+        if (token) {
+            fetchUrl.searchParams.append("access_token", token);
+        }
         fetchUrl.searchParams.append("fields[]", "*");
         fetchUrl.searchParams.append("fields[]", "scenes.collection");
         fetchUrl.searchParams.append("fields[]", "scenes.item.*");
@@ -172,6 +176,9 @@
                     url.pathname += "/screen/sequence.html";
                     url.searchParams.set("slug", message.slug);
                     url.searchParams.set("src", serverUrl);
+                    if (token) {
+                        url.searchParams.set("token", token);
+                    }
                     console.log("Switching sequence", url);
                     location.href = url.toString();
                     return;
