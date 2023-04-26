@@ -1,5 +1,5 @@
 #table-grid {
-    padding: 1rem;
+    /* padding: 1rem; */
     gap: 1rem;
     color: white;
     height: 100%;
@@ -78,7 +78,7 @@
 .dir-side {
     display: flex;
     flex-direction: column;
-    padding: 1rem 1rem 1rem 0;
+    /* padding: 1rem 1rem 1rem 0; */
     /* margin-top: 36.53px; */
 }
 
