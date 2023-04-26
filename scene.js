@@ -3,6 +3,9 @@
 function setupScene(scene) {
     console.log("Setting up scene", scene);
 
+    // Set up 'margin'
+    document.body.style.padding = `${scene.topMargin || 0} ${scene.rightMargin || 0} ${scene.bottomMargin || 0} ${scene.leftMargin || 0}`;
+
     if (scene.background) {
         setBackground(scene.background);
     }

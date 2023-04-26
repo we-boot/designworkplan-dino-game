@@ -116,6 +116,10 @@
                 if (scene.item.background?.mediaFile) {
                     scene.item.background.mediaFile = assetToUrl(scene.item.background.mediaFile);
                 }
+                scene.item.topMargin = sequence.topMargin;
+                scene.item.rightMargin = sequence.rightMargin;
+                scene.item.bottomMargin = sequence.bottomMargin;
+                scene.item.leftMargin = sequence.leftMargin;
 
                 console.log("Playing scene", scene);
 

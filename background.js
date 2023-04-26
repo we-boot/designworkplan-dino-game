@@ -91,6 +91,14 @@ function setBackground(description) {
         document.head.appendChild(linkEl);
     }
 
+    if (description.lineHeight) {
+        document.body.style.lineHeight = description.lineHeight;
+    }
+
+    if (description.fontSize) {
+        document.body.style.fontSize = description.fontSize;
+    }
+
     switch (description.type) {
         case "blank":
             break;
