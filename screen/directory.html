@@ -28,7 +28,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
     </head>
     <body>
-        <div class="flex-hor">
+        <div class="flex-hor" id="table-container">
             <div id="table-grid"></div>
             <div class="dir-side">
                 <p class="dir-top-space">&nbsp;</p>
@@ -107,7 +107,10 @@
             }
             async function setupDirectory(data) {
                 let perColumn = new Map();
-                let maxItemsPerColumn = Math.floor(window.innerHeight / 40);
+                let gridEl = document.getElementById("table-grid");
+                let gridContainerEl = document.getElementById("table-container");
+
+                let maxItemsPerColumn = Math.floor(gridContainerEl.getBoundingClientRect().height / 40);
                 console.log("maxItemsPerColumn", maxItemsPerColumn);
                 for (let i = 0; i < data.length; i++) {
                     let row = data[i];
@@ -129,7 +132,7 @@
                         perColumn.set(column, divEl);
                     }
                 }
-                let gridEl = document.getElementById("table-grid");
+
                 let gridTemplate = [];
                 for (let [col, el] of Array.from(perColumn.entries()).sort(([ka], [kb]) => ka - kb)) {
                     console.log("Column %d:", col, el);
