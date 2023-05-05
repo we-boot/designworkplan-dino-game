@@ -73,6 +73,8 @@
             const imgUrl = scene.imageFile || "/static/directory-demo.png";
             const descriptionTitle = scene.descriptionTitle || "Hoe vind ik mijn bestemming?";
             const description = scene.description || "";
+            const evenRowColor = scene.evenRowColor || "transparent";
+            const oddRowColor = scene.oddRowColor || "transparent";
 
             function refreshTime() {
                 let now = new Date();
@@ -115,7 +117,9 @@
                 for (let i = 0; i < data.length; i++) {
                     let row = data[i];
                     let column = Math.floor(i / maxItemsPerColumn);
+                    let columnRowIdx = i % maxItemsPerColumn;
                     let rowEl = createRow([row.destination, row.department, row.route]);
+                    rowEl.style.backgroundColor = columnRowIdx % 2 == 0 ? evenRowColor : oddRowColor;
                     if (perColumn.has(column)) {
                         perColumn.get(column).querySelector("tbody").appendChild(rowEl);
                     } else {

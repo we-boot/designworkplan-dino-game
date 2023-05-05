@@ -99,6 +99,10 @@ function setBackground(description) {
         document.body.style.fontSize = description.fontSize;
     }
 
+    if (description.fontColor) {
+        document.body.style.color = description.fontColor;
+    }
+
     switch (description.type) {
         case "blank":
             break;
