@@ -163,7 +163,10 @@
             document.querySelector(".dir-description__title").innerText = descriptionTitle;
             document.querySelector(".dir-description__content").innerHTML = description;
 
-            setupDirectory(scene.directory.map((e) => e["Directory_id"]));
+            let directoryEntries = scene.directory.map((e) => e["Directory_id"]);
+            directoryEntries.sort((a, b) => a.destination.localeCompare(b.destination) * 2 + (a.department || "").localeCompare(b.department || ""));
+
+            setupDirectory(directoryEntries);
         });
     </script>
     <script src="../scene.js"></script>
