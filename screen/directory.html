@@ -75,6 +75,7 @@
             const description = scene.description || "";
             const evenRowColor = scene.evenRowColor || "transparent";
             const oddRowColor = scene.oddRowColor || "transparent";
+            const borderColor = scene.borderColor;
 
             function refreshTime() {
                 let now = new Date();
@@ -166,6 +167,9 @@
             document.querySelector(".dir-map__img").src = imgUrl;
             document.querySelector(".dir-description__title").innerText = descriptionTitle;
             document.querySelector(".dir-description__content").innerHTML = description;
+            if (borderColor) {
+                document.querySelector(":root").style.setProperty("--directory-border-color", borderColor);
+            }
 
             let directoryEntries = scene.directory.map((e) => e["Directory_id"]);
             directoryEntries.sort((a, b) => a.destination.localeCompare(b.destination) * 2 + (a.department || "").localeCompare(b.department || ""));

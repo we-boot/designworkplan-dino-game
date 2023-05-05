@@ -1,3 +1,7 @@
+:root {
+    --directory-border-color: #ffffffaa;
+}
+
 #table-container {
     height: 100%;
 }
@@ -32,7 +36,7 @@
 #table-grid td,
 #table-grid th {
     padding: 0.5rem 0.5rem 0.5rem 0;
-    border-bottom: 1px solid #ffffffaa;
+    border-bottom: 1px solid var(--directory-border-color);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -48,8 +52,8 @@
     display: flex;
     align-items: center;
     padding: 1rem;
-    border-bottom: 1px solid #ffffffaa;
-    border-top: 1px solid #ffffffaa;
+    border-bottom: 1px solid var(--directory-border-color);
+    border-top: 1px solid var(--directory-border-color);
 }
 
 .dir-time__weather {
@@ -59,7 +63,7 @@
     flex-grow: 1;
     flex-direction: column;
     padding: 1.5rem;
-    margin-left: 1.5rem;
+    /* margin-left: 0.5rem; */
     /* max-width: 200px; */
 }
 
@@ -96,8 +100,8 @@
 }
 
 .dir-map {
-    border-bottom: 1px solid #ffffffaa;
-    /* border-top: 1px solid #ffffffaa; */
+    border-bottom: 1px solid var(--directory-border-color);
+    /* border-top: 1px solid var(--directory-border-color); */
     padding: 1rem;
 }
 
@@ -113,8 +117,8 @@
 
 .dir-description {
     /* color: white; */
-    border-bottom: 1px solid #ffffffaa;
-    /* border-top: 1px solid #ffffffaa; */
+    border-bottom: 1px solid var(--directory-border-color);
+    /* border-top: 1px solid var(--directory-border-color); */
     padding: 1rem;
 }
 
