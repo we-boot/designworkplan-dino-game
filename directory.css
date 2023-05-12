@@ -29,7 +29,11 @@
     width: 40%;
 }
 #table-grid table tr th:nth-child(3) {
-    width: 40px;
+    width: 50px;
+    text-overflow: clip;
+}
+#table-grid table tr th:nth-child(4) {
+    width: 90px;
     text-overflow: clip;
 }
 

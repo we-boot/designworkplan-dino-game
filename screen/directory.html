@@ -51,7 +51,7 @@
                 </div>
                 <div class="dir-map">
                     <h2 class="dir-map__title">Waar ben ik?</h2>
-                    <img class="dir-map__img" src="/static/directory-demo.png" />
+                    <img class="dir-map__img" src="" />
                 </div>
                 <div class="dir-description">
                     <h2 class="dir-description__title">Hoe vind ik mijn bestemming?</h2>
@@ -122,12 +122,12 @@
                     let row = data[i];
                     let column = Math.floor(i / maxItemsPerColumn);
                     let columnRowIdx = i % maxItemsPerColumn;
-                    let rowEl = createRow([row.destination, row.department, row.route]);
+                    let rowEl = createRow([row.destination, row.department, row.route, row.waitingRoom]);
                     rowEl.style.backgroundColor = columnRowIdx % 2 == 0 ? evenRowColor : oddRowColor;
                     if (perColumn.has(column)) {
                         perColumn.get(column).querySelector("tbody").appendChild(rowEl);
                     } else {
-                        let headerEl = createRow(["Bestemming", "Afdeling", "Route"], true);
+                        let headerEl = createRow(["Bestemming", "Afdeling", "Route", "Wachtkamer"], true);
                         let theadEl = document.createElement("thead");
                         theadEl.appendChild(headerEl);
                         let tbodyEl = document.createElement("tbody");
