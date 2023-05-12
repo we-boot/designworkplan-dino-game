@@ -25,10 +25,15 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
+        <style>
+            #image-media {
+                object-fit: contain;
+            }
+        </style>
     </head>
     <body>
         <div class="center">
-            <img style="max-width: 90%; max-height: 90%" id="image-media" />
+            <img id="image-media" />
             <iframe
                 style="display: block"
                 id="video-media"
@@ -43,20 +48,29 @@
     <script>
         window.addEventListener("scene", (ev) => {
             let scene = ev.detail.scene;
+
             let type = scene.type || scene.urlType;
             let imageElement = document.getElementById("image-media");
             let videoElement = document.getElementById("video-media");
 
             if (type === "image") {
-                imageElement.src = scene.imageFile || scene.url;
                 videoElement.remove();
+
+                imageElement.src = scene.imageFile || scene.url;
+                if (scene.width) {
+                    imageElement.style.width = scene.width;
+                }
+                if (scene.height) {
+                    imageElement.style.height = scene.height;
+                }
             } else if (type === "youtube") {
-                videoElement.width = scene.width ? parseInt(scene.width) : window.innerWidth * 0.75;
-                videoElement.height = scene.height ? parseInt(scene.height) : window.innerHeight * 0.75;
+                imageElement.remove();
+
+                videoElement.width = scene.width ? scene.width : window.innerWidth * 0.75;
+                videoElement.height = scene.height ? scene.height : window.innerHeight * 0.75;
 
                 let ytUrl = new URL(scene.url);
                 videoElement.src = "https://www.youtube.com/embed/" + ytUrl.searchParams.get("v");
-                imageElement.remove();
             }
         });
     </script>
