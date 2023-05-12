@@ -25,13 +25,17 @@
         <div id="chart1" class="center"></div>
 
         <script>
-            d3clock({
-                target: "#chart1",
-                face: "sbb",
-                width: 500,
-                TZOffset: {
-                    hours: 0,
-                },
+            window.addEventListener("scene", (ev) => {
+                let scene = ev.detail.scene;
+
+                d3clock({
+                    target: "#chart1",
+                    face: scene.clockType || "sbb",
+                    width: parseInt(scene.width || "500"),
+                    TZOffset: {
+                        hours: 0,
+                    },
+                });
             });
         </script>
         <script src="../scene.js"></script>

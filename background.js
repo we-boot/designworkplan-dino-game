@@ -73,7 +73,7 @@ async function loadParticles(config = {}) {
 let backgroundHasBeenSetUp = false;
 
 function setBackground(description) {
-    console.log("set background", description);
+    console.log("Set background", description);
 
     if (description.customCss) {
         let styleEl = document.createElement("style");
@@ -101,6 +101,7 @@ function setBackground(description) {
 
     if (description.fontColor) {
         document.body.style.color = description.fontColor;
+        document.body.style.fill = description.fontColor;
     }
 
     switch (description.type) {
