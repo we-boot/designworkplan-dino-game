@@ -15,9 +15,31 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
+        <style>
+            #iframe-first,
+            #iframe-second {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                transition: 500ms;
+            }
+            #iframe-first {
+                transform: none;
+                opacity: 1;
+            }
+            #iframe-second {
+                transform: none;
+                opacity: 0;
+            }
+        </style>
     </head>
     <body>
-        <iframe id="sequence" height="100%" width="100%" allow="autoplay; fullscreen"></iframe>
+        <div>
+            <iframe id="iframe-first" allow="autoplay; fullscreen"></iframe>
+            <iframe id="iframe-second" allow="autoplay; fullscreen"></iframe>
+        </div>
     </body>
 
     <script>
@@ -37,7 +59,10 @@
         fetchUrl.searchParams.append("fields[]", "scenes.item.*");
         fetchUrl.searchParams.append("fields[]", "scenes.item.background.*");
 
-        const iframe = document.getElementById("sequence");
+        // Use 'double buffering' iframes to preload and transition
+        let currentIsFirstFrame = true;
+        const firstIframe = document.getElementById("iframe-first");
+        const secondIframe = document.getElementById("iframe-second");
 
         function getPathForSceneType(sceneType) {
             switch (sceneType) {
@@ -152,10 +177,45 @@
                 sceneUrl.searchParams.set("v", "2");
                 console.log("Scene url", sceneUrl.toString());
                 currentSceneIndex = nextSceneIndex;
-                iframe.src = sceneUrl.toString();
-                iframe.onload = () => {
-                    iframe.contentWindow.postMessage({ type: "scene", scene: scene, serverUrl: serverUrl }, "*");
+
+                let transitionType = sequence.transitionType || "none";
+                let prevIframe = currentIsFirstFrame ? firstIframe : secondIframe;
+                let nextIframe = !currentIsFirstFrame ? firstIframe : secondIframe;
+                nextIframe.src = sceneUrl.toString();
+                nextIframe.onload = () => {
+                    nextIframe.contentWindow.postMessage({ type: "scene", scene: scene, serverUrl: serverUrl }, "*");
+
+                    setTimeout(() => {
+                        // Transition now
+                        if (transitionType === "slide-left") {
+                            prevIframe.style.transform = "translateX(-100%)";
+                            prevIframe.style.opacity = 0;
+                            nextIframe.style.transform = "translateX(0%)";
+                            nextIframe.style.opacity = 1;
+                        } else if (transitionType === "grow") {
+                            prevIframe.style.transform = "scale(2)";
+                            prevIframe.style.opacity = 0;
+                            nextIframe.style.transform = "scale(1)";
+                            nextIframe.style.opacity = 1;
+                        } else if (transitionType === "fade" || transitionType === "none") {
+                            prevIframe.style.opacity = 0;
+                            nextIframe.style.opacity = 1;
+                        }
+
+                        setTimeout(() => {
+                            // Unload previous scene
+                            prevIframe.url = "";
+
+                            // Prepare frame for next transition (is currently invisible)
+                            if (transitionType === "slide-left") {
+                                prevIframe.style.transform = "translateX(100%)";
+                            } else if (transitionType === "grow") {
+                                prevIframe.style.transform = "scale(0.5)";
+                            }
+                        }, 1000);
+                    }, 1000);
                 };
+                currentIsFirstFrame = !currentIsFirstFrame;
 
                 let nextSceneDelayMs = (scene.item.duration || 60) * 1000;
                 if (scene.collection === "CountdownScene") {
@@ -163,6 +223,10 @@
                     if (diffMs > 0) {
                         nextSceneDelayMs += diffMs;
                     }
+                }
+                if (nextSceneDelayMs < 3000) {
+                    console.warn("nextSceneDelayMs must be 3000ms at least to make transition system not crash");
+                    nextSceneDelayMs = 3000;
                 }
                 console.log("Going to next scene in", nextSceneDelayMs / 1000, "seconds");
 
@@ -195,11 +259,16 @@
                 }
             });
 
+            firstIframe.style.transition = sequence.transition || "500ms";
+            secondIframe.style.transition = sequence.transition || "500ms";
+
             if (typeof sequence.width === "number") {
-                iframe.width = sequence.width + "%";
+                firstIframe.width = sequence.width + "%";
+                secondIframe.width = sequence.width + "%";
             }
             if (typeof sequence.height === "number") {
-                iframe.height = sequence.height + "%";
+                firstIframe.height = sequence.height + "%";
+                secondIframe.height = sequence.height + "%";
             }
 
             subscribeSequence(sequence.id);
