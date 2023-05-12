@@ -1,6 +1,6 @@
 // This file should be loaded after all other files!
 
-function setupScene(scene) {
+function setupScene(scene, serverUrl) {
     console.log("Setting up scene", scene);
 
     // Set up 'margin'
@@ -11,12 +11,12 @@ function setupScene(scene) {
     }
 
     // Allow different scenes to implement different initializations
-    window.dispatchEvent(new CustomEvent("scene", { detail: { scene: scene } }));
+    window.dispatchEvent(new CustomEvent("scene", { detail: { scene: scene, serverUrl: serverUrl } }));
 }
 
 window.addEventListener("message", (ev) => {
     if (ev.data.type === "scene") {
-        setupScene(ev.data.scene.item);
+        setupScene(ev.data.scene.item, ev.data.serverUrl);
     }
 });
 
@@ -25,7 +25,7 @@ function legacySceneSetup() {
     if (!params.has("v")) {
         let scene = Object.fromEntries(params.entries());
         console.log("Extracted scene settings from params", scene);
-        setupScene(scene);
+        setupScene(scene, params.get("serverUrl") || "/");
     }
 }
 

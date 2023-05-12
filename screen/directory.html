@@ -69,6 +69,7 @@
     <script>
         window.addEventListener("scene", (ev) => {
             let scene = ev.detail.scene;
+            let serverUrl = ev.detail.serverUrl;
 
             const imgTitle = scene.imageTitle || "Waar ben ik?";
             const imgUrl = scene.imageFile || "/static/directory-demo.png";
@@ -77,6 +78,7 @@
             const evenRowColor = scene.evenRowColor || "transparent";
             const oddRowColor = scene.oddRowColor || "transparent";
             const borderColor = scene.borderColor;
+            const directorySrc = scene.directorySrc ? new URL(scene.directorySrc, serverUrl).toString() : null;
 
             function refreshTime() {
                 let now = new Date();
@@ -172,10 +174,18 @@
                 document.querySelector(":root").style.setProperty("--directory-border-color", borderColor);
             }
 
-            let directoryEntries = scene.directory.map((e) => e["Directory_id"]);
-            directoryEntries.sort((a, b) => a.destination.localeCompare(b.destination) * 2 + (a.department || "").localeCompare(b.department || ""));
-
-            setupDirectory(directoryEntries);
+            if (scene.directory) {
+                let directoryEntries = scene.directory.map((e) => e["Directory_id"]);
+                directoryEntries.sort(
+                    (a, b) => a.destination.localeCompare(b.destination) * 2 + (a.department || "").localeCompare(b.department || "")
+                );
+                setupDirectory(directoryEntries);
+            } else if (directorySrc) {
+                console.log("Fetching directory from", directorySrc);
+                setupDirectoryFrom(directorySrc);
+            } else {
+                console.error("No source for entries");
+            }
         });
     </script>
     <script src="../scene.js"></script>

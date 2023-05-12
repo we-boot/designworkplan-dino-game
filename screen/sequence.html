@@ -36,7 +36,6 @@
         fetchUrl.searchParams.append("fields[]", "scenes.collection");
         fetchUrl.searchParams.append("fields[]", "scenes.item.*");
         fetchUrl.searchParams.append("fields[]", "scenes.item.background.*");
-        fetchUrl.searchParams.append("fields[]", "scenes.item.directory.Directory_id.*");
         fetchUrl.searchParams.append("filter[slug]", slug);
 
         const iframe = document.getElementById("sequence");
@@ -156,7 +155,7 @@
                 currentSceneIndex = nextSceneIndex;
                 iframe.src = sceneUrl.toString();
                 iframe.onload = () => {
-                    iframe.contentWindow.postMessage({ type: "scene", scene: scene }, "*");
+                    iframe.contentWindow.postMessage({ type: "scene", scene: scene, serverUrl: serverUrl }, "*");
                 };
 
                 let nextSceneDelayMs = (scene.item.duration || 60) * 1000;
