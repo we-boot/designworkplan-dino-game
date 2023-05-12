@@ -24,11 +24,11 @@
         const params = new URLSearchParams(location.search);
         const serverUrl = params.get("src") || params.get("serverUrl") || "https://dashboard-directory.designworkplan.weboot.nl/";
         const viewUrl = location.href.replace("/screen/sequence.html", "").replace("/screen/sequence", "");
-        const slug = params.get("slug") || (location.hash ? location.hash.substring(1) : "pillar-l2");
+        const id = params.get("slug") || params.get("id") || (location.hash ? location.hash.substring(1) : "pillar-l2");
         const token = params.get("token");
 
         const fetchUrl = new URL(serverUrl);
-        fetchUrl.pathname = "/items/Sequence";
+        fetchUrl.pathname = "/items/Sequence/" + id;
         if (token) {
             fetchUrl.searchParams.append("access_token", token);
         }
@@ -36,7 +36,6 @@
         fetchUrl.searchParams.append("fields[]", "scenes.collection");
         fetchUrl.searchParams.append("fields[]", "scenes.item.*");
         fetchUrl.searchParams.append("fields[]", "scenes.item.background.*");
-        fetchUrl.searchParams.append("filter[slug]", slug);
 
         const iframe = document.getElementById("sequence");
 
@@ -178,7 +177,7 @@
                 if (message.type === "goto-sequence") {
                     const url = new URL(viewUrl);
                     url.pathname += "/screen/sequence.html";
-                    url.searchParams.set("slug", message.slug);
+                    url.searchParams.set("id", message.id);
                     url.searchParams.set("src", serverUrl);
                     if (token) {
                         url.searchParams.set("token", token);
@@ -211,7 +210,7 @@
             fetch(fetchUrl)
                 .then((e) => e.json())
                 .then((data) => {
-                    const sequence = data.data[0];
+                    const sequence = data.data;
                     console.log("Fetched sequence", sequence);
                     startSequence(sequence);
 
