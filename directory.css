@@ -70,7 +70,7 @@
     align-items: center;
     flex-grow: 1;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 2rem;
     /* margin-left: 0.5rem; */
     /* max-width: 200px; */
 }
@@ -88,7 +88,8 @@
 
 .dir-time__date {
     font-size: 2rem;
-    min-width: 220px;
+    max-width: 160px;
+    /* min-width: 220px; */
 }
 
 .dir-side {

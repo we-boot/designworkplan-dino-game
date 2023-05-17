@@ -15,6 +15,7 @@
         <script src="../weather.js"></script>
         <script src="../static/qrcode.min.js"></script>
         <script src="../static/moment.js"></script>
+        <script src="../static/locale/nl.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
@@ -82,7 +83,9 @@
 
             function refreshTime() {
                 let now = new Date();
+                moment.locale("nl");
                 let m = moment();
+
                 let timeElement = document.getElementsByClassName("dir-time__time")[0];
                 let dateElement = document.getElementsByClassName("dir-time__date")[0];
                 timeElement.innerText = m.format("HH:mm");
