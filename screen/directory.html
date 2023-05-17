@@ -116,7 +116,13 @@
                 let gridEl = document.getElementById("table-grid");
                 let gridContainerEl = document.getElementById("table-container");
 
-                let maxItemsPerColumn = Math.floor(gridContainerEl.getBoundingClientRect().height / 40);
+                let rowHeightTester = createRow(["height-test"]);
+                gridEl.append(rowHeightTester);
+                let rowHeight = rowHeightTester.querySelector("td, th").getBoundingClientRect().height;
+                console.log("rowHeight", rowHeight);
+                rowHeightTester.remove();
+
+                let maxItemsPerColumn = Math.floor(gridContainerEl.getBoundingClientRect().height / rowHeight);
                 console.log("maxItemsPerColumn", maxItemsPerColumn);
                 for (let i = 0; i < data.length; i++) {
                     let row = data[i];

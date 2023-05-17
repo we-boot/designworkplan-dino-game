@@ -19,14 +19,14 @@
 #table-grid > div > table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 #table-grid table tr th:nth-child(1) {
-    width: 60%;
+    /* min-width: 200px; */
 }
 #table-grid table tr th:nth-child(2) {
-    width: 40%;
+    /* min-width: 35%; */
 }
 #table-grid table tr th:nth-child(3) {
     width: 50px;
@@ -44,6 +44,10 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+#table-grid td:nth-child(1) {
+    /* max-width: 1px; */
 }
 
 /* * {
