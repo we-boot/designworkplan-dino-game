@@ -153,10 +153,3 @@ function setBackground(description) {
 
     backgroundHasBeenSetUp = true;
 }
-
-setTimeout(() => {
-    if (!backgroundHasBeenSetUp) {
-        console.log("No background specified, using default particles");
-        setBackground({ type: "particles" });
-    }
-}, 250);
