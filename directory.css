@@ -72,7 +72,7 @@
     flex-direction: column;
     padding: 2rem;
     /* margin-left: 0.5rem; */
-    max-width: 200px;
+    max-width: 300px;
 }
 
 .dir-time__weather > p {
