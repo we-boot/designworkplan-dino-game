@@ -1,201 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <title>designworkplan CMS</title>
-        <link rel="icon" type="image/x-icon" href="../static/icon.png" />
-        <link rel="stylesheet" href="../index.css" />
-        <link rel="stylesheet" href="../directory.css" />
-        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
-        <script src="../index.js"></script>
-        <script src="../connection.js"></script>
-        <script src="../weather.js"></script>
-        <script src="../static/qrcode.min.js"></script>
-        <script src="../static/moment.js"></script>
-        <script src="../static/locale/nl.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-shape-circle@2.0.5/tsparticles.shape.circle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-color@2.0.5/tsparticles.updater.color.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-opacity@2.0.5/tsparticles.updater.opacity.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
-        <script src="../background.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="flex-hor" id="table-container">
-            <div id="table-grid"></div>
-            <div class="dir-side">
-                <p class="dir-top-space">&nbsp;</p>
-                <div class="dir-time">
-                    <div>
-                        <p class="dir-time__time"></p>
-                        <p class="dir-time__date"></p>
-                    </div>
-                    <div class="dir-time__weather">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>designworkplan CMS</title>
+    <link rel="icon" type="image/x-icon" href="../static/icon.png" />
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../directory.css" />
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.6.0.0.min.js"></script>
+    <script src="../index.js"></script>
+    <script src="../connection.js"></script>
+    <script src="../weather.js"></script>
+    <script src="../static/qrcode.min.js"></script>
+    <script src="../static/moment.js"></script>
+    <script src="../static/locale/nl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2.0.5/tsparticles.engine.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-move-base@2.0.5/tsparticles.move.base.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/tsparticles-plugin-emitters@2.0.5/tsparticles.plugin.emitters.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-shape-circle@2.0.5/tsparticles.shape.circle.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/tsparticles-updater-color@2.0.5/tsparticles.updater.color.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/tsparticles-updater-opacity@2.0.5/tsparticles.updater.opacity.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/tsparticles-updater-out-modes@2.0.5/tsparticles.updater.out-modes.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-updater-size@2.0.5/tsparticles.updater.size.min.js"></script>
+    <script src="../background.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Work+Sans:wght@500&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="flex-hor" id="table-container">
+        <div id="table-grid"></div>
+        <div class="dir-side">
+            <p class="dir-top-space">&nbsp;</p>
+            <div class="dir-time">
+                <div>
+                    <p class="dir-time__time"></p>
+                    <p class="dir-time__date"></p>
+                </div>
+                <!-- <div class="dir-time__weather">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
-                            <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            
                             <path
                                 fill="white"
                                 d="M0 336c0 79.5 64.5 144 144 144H512c70.7 0 128-57.3 128-128c0-61.9-44-113.6-102.4-125.4c4.1-10.7 6.4-22.4 6.4-34.6c0-53-43-96-96-96c-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32C167.6 32 96 103.6 96 192c0 2.7 .1 5.4 .2 8.1C40.2 219.8 0 273.2 0 336z"
                             />
                         </svg>
                         <p>Overwegig zonnig</p>
-                    </div>
-                </div>
-                <div class="dir-map">
-                    <h2 class="dir-map__title">Waar ben ik?</h2>
-                    <img class="dir-map__img" src="" />
-                </div>
-                <div class="dir-description">
-                    <h2 class="dir-description__title">Hoe vind ik mijn bestemming?</h2>
-                    <p class="dir-description__content">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                        aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation. Lorem ipsum dolor sit amet, consectetuer
-                        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-                        veniam, quis nostrud exerci tation
-                    </p>
-                </div>
+                    </div> -->
+            </div>
+            <div class="dir-map">
+                <h2 class="dir-map__title">Waar ben ik?</h2>
+                <img class="dir-map__img" src="" />
+            </div>
+            <div class="dir-description">
+                <h2 class="dir-description__title">Hoe vind ik mijn bestemming?</h2>
+                <p class="dir-description__content">
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
+                    laoreet dolore magna
+                    aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation. Lorem ipsum dolor
+                    sit amet, consectetuer
+                    adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim
+                    veniam, quis nostrud exerci tation
+                </p>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 
-    <script>
-        window.addEventListener("scene", (ev) => {
-            let scene = ev.detail.scene;
-            let serverUrl = ev.detail.serverUrl;
+<script>
+    window.addEventListener("scene", (ev) =>
+    {
+        let scene = ev.detail.scene;
+        let serverUrl = ev.detail.serverUrl;
 
-            const imgTitle = scene.imageTitle || "Waar ben ik?";
-            const imgUrl = scene.imageFile || "/static/directory-demo.png";
-            const descriptionTitle = scene.descriptionTitle || "Hoe vind ik mijn bestemming?";
-            const description = scene.description || "";
-            const evenRowColor = scene.evenRowColor || "transparent";
-            const oddRowColor = scene.oddRowColor || "transparent";
-            const borderColor = scene.borderColor;
-            const directorySrc = scene.directorySrc ? new URL(scene.directorySrc, serverUrl).toString() : null;
+        const imgTitle = scene.imageTitle || "Waar ben ik?";
+        const imgUrl = scene.imageFile || "/static/directory-demo.png";
+        const descriptionTitle = scene.descriptionTitle || "Hoe vind ik mijn bestemming?";
+        const description = scene.description || "";
+        const evenRowColor = scene.evenRowColor || "transparent";
+        const oddRowColor = scene.oddRowColor || "transparent";
+        const borderColor = scene.borderColor;
+        const directorySrc = scene.directorySrc ? new URL(scene.directorySrc, serverUrl).toString() : null;
 
-            function refreshTime() {
-                let now = new Date();
-                moment.locale("nl");
-                let m = moment();
+        function refreshTime()
+        {
+            let now = new Date();
+            moment.locale("nl");
+            let m = moment();
 
-                let timeElement = document.getElementsByClassName("dir-time__time")[0];
-                let dateElement = document.getElementsByClassName("dir-time__date")[0];
-                timeElement.innerText = m.format("HH:mm");
-                dateElement.innerText = m.format("dddd, D MMMM");
+            let timeElement = document.getElementsByClassName("dir-time__time")[0];
+            let dateElement = document.getElementsByClassName("dir-time__date")[0];
+            timeElement.innerText = m.format("HH:mm");
+            dateElement.innerText = m.format("dddd, D MMMM");
+        }
+
+        function hourlyRefresh()
+        {
+            // refreshWeather();
+        }
+
+        async function refreshWeather()
+        {
+            let weatherElement = document.querySelector(".dir-time__weather > p");
+            let description = await getWeatherDescription();
+            if (!description) return;
+
+            description = description[0].toUpperCase() + description.slice(1);
+            weatherElement.innerText = description;
+        }
+
+        function createRow(items, header = false)
+        {
+            let trEl = document.createElement("tr");
+            for (let i of items)
+            {
+                let cellEl = document.createElement(header ? "th" : "td");
+                cellEl.innerText = i;
+                trEl.appendChild(cellEl);
             }
+            return trEl;
+        }
+        async function setupDirectory(data)
+        {
+            let perColumn = new Map();
+            let gridEl = document.getElementById("table-grid");
+            let gridContainerEl = document.getElementById("table-container");
 
-            function hourlyRefresh() {
-                refreshWeather();
-            }
+            let rowHeightTester = createRow(["height-test"]);
+            gridEl.append(rowHeightTester);
+            let rowHeight = rowHeightTester.querySelector("td, th").getBoundingClientRect().height;
+            console.log("rowHeight", rowHeight);
+            rowHeightTester.remove();
 
-            async function refreshWeather() {
-                let weatherElement = document.querySelector(".dir-time__weather > p");
-                let description = await getWeatherDescription();
-                if (!description) return;
-
-                description = description[0].toUpperCase() + description.slice(1);
-                weatherElement.innerText = description;
-            }
-
-            function createRow(items, header = false) {
-                let trEl = document.createElement("tr");
-                for (let i of items) {
-                    let cellEl = document.createElement(header ? "th" : "td");
-                    cellEl.innerText = i;
-                    trEl.appendChild(cellEl);
+            let maxItemsPerColumn = Math.floor(gridContainerEl.getBoundingClientRect().height / rowHeight);
+            console.log("maxItemsPerColumn", maxItemsPerColumn);
+            for (let i = 0; i < data.length; i++)
+            {
+                let row = data[i];
+                let column = Math.floor(i / maxItemsPerColumn);
+                let columnRowIdx = i % maxItemsPerColumn;
+                let rowEl = createRow([row.destination, row.department, row.route, row.waitingRoom]);
+                rowEl.style.backgroundColor = columnRowIdx % 2 == 0 ? evenRowColor : oddRowColor;
+                if (perColumn.has(column))
+                {
+                    perColumn.get(column).querySelector("tbody").appendChild(rowEl);
+                } else
+                {
+                    let headerEl = createRow(["Bestemming", "Afdeling", "Route", "Wachtkamer"], true);
+                    let theadEl = document.createElement("thead");
+                    theadEl.appendChild(headerEl);
+                    let tbodyEl = document.createElement("tbody");
+                    tbodyEl.appendChild(rowEl);
+                    let tableEl = document.createElement("table");
+                    tableEl.appendChild(theadEl);
+                    tableEl.appendChild(tbodyEl);
+                    let divEl = document.createElement("div");
+                    divEl.appendChild(tableEl);
+                    perColumn.set(column, divEl);
                 }
-                return trEl;
-            }
-            async function setupDirectory(data) {
-                let perColumn = new Map();
-                let gridEl = document.getElementById("table-grid");
-                let gridContainerEl = document.getElementById("table-container");
-
-                let rowHeightTester = createRow(["height-test"]);
-                gridEl.append(rowHeightTester);
-                let rowHeight = rowHeightTester.querySelector("td, th").getBoundingClientRect().height;
-                console.log("rowHeight", rowHeight);
-                rowHeightTester.remove();
-
-                let maxItemsPerColumn = Math.floor(gridContainerEl.getBoundingClientRect().height / rowHeight);
-                console.log("maxItemsPerColumn", maxItemsPerColumn);
-                for (let i = 0; i < data.length; i++) {
-                    let row = data[i];
-                    let column = Math.floor(i / maxItemsPerColumn);
-                    let columnRowIdx = i % maxItemsPerColumn;
-                    let rowEl = createRow([row.destination, row.department, row.route, row.waitingRoom]);
-                    rowEl.style.backgroundColor = columnRowIdx % 2 == 0 ? evenRowColor : oddRowColor;
-                    if (perColumn.has(column)) {
-                        perColumn.get(column).querySelector("tbody").appendChild(rowEl);
-                    } else {
-                        let headerEl = createRow(["Bestemming", "Afdeling", "Route", "Wachtkamer"], true);
-                        let theadEl = document.createElement("thead");
-                        theadEl.appendChild(headerEl);
-                        let tbodyEl = document.createElement("tbody");
-                        tbodyEl.appendChild(rowEl);
-                        let tableEl = document.createElement("table");
-                        tableEl.appendChild(theadEl);
-                        tableEl.appendChild(tbodyEl);
-                        let divEl = document.createElement("div");
-                        divEl.appendChild(tableEl);
-                        perColumn.set(column, divEl);
-                    }
-                }
-
-                let gridTemplate = [];
-                for (let [col, el] of Array.from(perColumn.entries()).sort(([ka], [kb]) => ka - kb)) {
-                    console.log("Column %d:", col, el);
-                    gridEl.appendChild(el);
-                    gridTemplate.push("1fr");
-                }
-                gridEl.style.gridTemplateColumns = gridTemplate.join(" ");
             }
 
-            async function setupDirectoryFrom(src) {
-                let res = await fetch(src);
-                if (!res.ok) {
-                    console.error("Could not get directory", res.status, await res.text());
-                    return;
-                }
-                let data = await res.json();
-                setupDirectory(data.data);
+            let gridTemplate = [];
+            for (let [col, el] of Array.from(perColumn.entries()).sort(([ka], [kb]) => ka - kb))
+            {
+                console.log("Column %d:", col, el);
+                gridEl.appendChild(el);
+                gridTemplate.push("1fr");
             }
+            gridEl.style.gridTemplateColumns = gridTemplate.join(" ");
+        }
 
-            refreshTime();
-            setInterval(refreshTime, 1000);
-
-            hourlyRefresh();
-            setInterval(hourlyRefresh, 1000 * 60 * 60);
-
-            document.querySelector(".dir-map__title").innerText = imgTitle;
-            document.querySelector(".dir-map__img").src = imgUrl;
-            document.querySelector(".dir-description__title").innerText = descriptionTitle;
-            document.querySelector(".dir-description__content").innerHTML = description;
-            if (borderColor) {
-                document.querySelector(":root").style.setProperty("--directory-border-color", borderColor);
+        async function setupDirectoryFrom(src)
+        {
+            let res = await fetch(src);
+            if (!res.ok)
+            {
+                console.error("Could not get directory", res.status, await res.text());
+                return;
             }
+            let data = await res.json();
+            setupDirectory(data.data);
+        }
 
-            if (scene.directory) {
-                let directoryEntries = scene.directory.map((e) => e["Directory_id"]);
-                directoryEntries.sort(
-                    (a, b) => a.destination.localeCompare(b.destination) * 2 + (a.department || "").localeCompare(b.department || "")
-                );
-                setupDirectory(directoryEntries);
-            } else if (directorySrc) {
-                console.log("Fetching directory from", directorySrc);
-                setupDirectoryFrom(directorySrc);
-            } else {
-                console.error("No source for entries");
-            }
-        });
-    </script>
-    <script src="../scene.js"></script>
+        refreshTime();
+        setInterval(refreshTime, 1000);
+
+        hourlyRefresh();
+        setInterval(hourlyRefresh, 1000 * 60 * 60);
+
+        document.querySelector(".dir-map__title").innerText = imgTitle;
+        document.querySelector(".dir-map__img").src = imgUrl;
+        document.querySelector(".dir-description__title").innerText = descriptionTitle;
+        document.querySelector(".dir-description__content").innerHTML = description;
+        if (borderColor)
+        {
+            document.querySelector(":root").style.setProperty("--directory-border-color", borderColor);
+        }
+
+        if (scene.directory)
+        {
+            let directoryEntries = scene.directory.map((e) => e["Directory_id"]);
+            directoryEntries.sort(
+                (a, b) => a.destination.localeCompare(b.destination) * 2 + (a.department || "").localeCompare(b.department || "")
+            );
+            setupDirectory(directoryEntries);
+        } else if (directorySrc)
+        {
+            console.log("Fetching directory from", directorySrc);
+            setupDirectoryFrom(directorySrc);
+        } else
+        {
+            console.error("No source for entries");
+        }
+    });
+</script>
+<script src="../scene.js"></script>
+
 </html>

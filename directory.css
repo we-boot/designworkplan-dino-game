@@ -59,7 +59,7 @@
 
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: 2rem;
     border-bottom: 1px solid var(--directory-border-color);
     border-top: 1px solid var(--directory-border-color);
 }
@@ -82,13 +82,13 @@
 
 .dir-time__time {
     font-size: 5rem;
-    margin-top: -1.5rem;
+    margin-top: -0.5rem;
     font-weight: bold;
 }
 
 .dir-time__date {
     font-size: 2rem;
-    max-width: 160px;
+    max-width: 300px;
     /* min-width: 220px; */
 }
 
